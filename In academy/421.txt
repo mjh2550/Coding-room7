@@ -1,0 +1,341 @@
+421
+=====================
+상속 (inheritance)
+
+1) 100 % 상속
+2) 자녀의 재산은 부모와 같거나 많습니다(자녀클래스는 버릴수 없다)
+3) 부모/자녀용어
+
+parent class/child class
+부모클래스/ 자녀클래스
+base class/derived class
+기본	/	파생
+
+4) 상속의 실제 keyword
+
+	extends  = is a kind of (~의 한 종류이다)
+
+
+class animal{} //내용없어도 된다
+class bird extends animal{}//상속을 받은 bird클래스
+>>bird class는 animal class의 한 종류이다
+
+부모가 만든 것 자녀가 재사용하는 것을 상속이라고 한다.
+
+----------------
+
+animal 부모는 move() 하는 행동이 있다. 새는 노래잘하고 물고기는 수영을잘한다
+상속을 이용해 출력하라
+
+나잘움직여==>부모animal
+나잘움직여==>새
+노래엄청잘해
+
+나잘움직여 >>물고기
+수영은 내가잘해
+--------------
+
+*일반적으로 부모쪽 생성자를 만날일이 없기 때문에 상속에 있어서는 자녀쪽 생성자를 생성하면 부모쪽을 먼저 거치고 내려옴
+
+class Boomo {
+	public void don() {
+		System.out.println("나 재산 많아~~~~");
+	}
+
+	protected String Juso;
+
+	public Boomo() {
+		System.out.println("내 나이 아직 젊어 100살 아래야"); // 디폴트생성자, 객체생성시 빈칸두면 이 메세지 찍힘
+		//일반적으로 부모쪽 생성자를 만날일이 없기 때문에 상속에 있어서
+		//자녀쪽 생성자를 생성하면 
+		//부모쪽을 먼저 거치고 내려옴
+		
+	}
+	public Boomo(int na2) {
+		System.out.println("에이 그래도"+na2+"살 보다는 많지");
+	}
+}
+
+class Janyu extends Boomo {// 자녀클래스
+
+	public Janyu(String juso, int na2) {
+		super(na2);//na2를 인자로 받는 생성자를 가져옴
+		this.na2 = na2;
+		System.out.println("나는 자녀 생성자");
+		this.Juso = juso;// 상속받음
+	}
+
+	public Janyu() {
+
+	}
+
+	public void Car() {
+		System.out.println("중형차있음");
+	}
+
+	protected int na2;
+}
+
+
+
+
+public class B421 {
+
+	public static void main(String[] args) {
+		Boomo b1 = new Boomo();// 내 나이 아직 젊어
+		b1.don();//나 재산많아
+
+		Janyu j1 = new Janyu();// 내나이 아직 젊어
+		j1.don();//나 재산많아
+		j1.Car();//중형차있음
+
+		Janyu j2 = new Janyu("종로", 30);
+		System.out.println("\n" + j2.na2 + j2.Juso);
+	}
+
+}
+class Boomo {
+	public void don() {
+		System.out.println("나 재산 많아~~~~");
+	}
+
+	protected String Juso;
+
+	public Boomo() {
+		System.out.println("내 나이 아직 젊어 100살 아래야"); // 디폴트생성자, 객체생성시 빈칸두면 이 메세지 찍힘
+		//일반적으로 부모쪽 생성자를 만날일이 없기 때문에 상속에 있어서
+		//자녀쪽 생성자를 생성하면 
+		//부모쪽을 먼저 거치고 내려옴
+		
+	}
+	public Boomo(int na2) {
+		System.out.println("에이 그래도"+na2+"살 보다는 많지");
+	}
+}
+
+class Janyu extends Boomo {// 자녀클래스
+
+	public Janyu(String juso, int na2) {
+		super(na2);//na2를 인자로 받는 생성자를 가져옴
+		this.na2 = na2;
+		System.out.println("나는 자녀 생성자");
+		this.Juso = juso;// 상속받음
+	}
+
+	public Janyu() {
+
+	}
+
+	public void Car() {
+		System.out.println("중형차있음");
+	}
+
+	protected int na2;
+}
+
+
+
+
+public class B421 {
+
+	public static void main(String[] args) {
+		Boomo b1 = new Boomo();// 내 나이 아직 젊어
+		b1.don();//나 재산많아
+
+		Janyu j1 = new Janyu();// 내나이 아직 젊어
+		j1.don();//나 재산많아
+		j1.Car();//중형차있음
+
+		Janyu j2 = new Janyu("종로", 30);
+		System.out.println("\n" + j2.na2 + j2.Juso);
+	}
+
+}
+
+
+}
+
+-----------------------
+자료의 형변환
+
+short cc=55;
+int dd=cc; //암시적형변환
+
+int aa=30; //명시적형변환
+short bb=(short)aa;
+
+객체의 형변환
+부모에다 자녀것을 넣고, 자녀에다 부모것을 넣는 것
+
+public class D421 {
+
+	public static void main(String[] args) {
+		Parent p1=new Parent();
+		Child c1=new Child();
+		p1.car();
+		c1.car();
+		
+		//Parent p2=new Parent();
+		//Parent p2=c1;//객체의 형변환 : 부모에 자녀넣거나 자녀에 부모넣거나
+		Parent p2=new Child();
+		//p2.car();
+		//Child c2=p1;//x
+		//Child c2=new Parent(); //메모리 할당량이 다르기 때문에 안됨
+		//일반적으로 부모가 먼저나오면 에러가 안뜨고, 그 반대이면 에러가 뜬다
+		Child c3=(Child) p2; //new Child();o
+		Child c5=(Child) p1; //new Parent();//x
+		//compiler o   run x
+		//객체의 형변환은 똑같은 내용인데 버전을 다른 것을 쓸 때 사용함
+		//그냥상속이 아닐때 사용함
+	}
+
+}
+class Parent{
+	public void car() {//재정의
+		System.out.println("나는 부모-드라이브가자");
+	}
+}
+
+class Child extends Parent{
+	public void car() {
+		System.out.println("나는 자녀-여행가자");
+	}
+}
+-------------------------
+overriding//toString()
+1)상속에 있어서
+2)메서드 이름 같아야
+3)upgrade 형식
+------------------------
+// 1번누르면 부모차, 2번누르면 자녀차 메소드가 나오도록 형변환을 통한 프로그램 작성하시오
+		Parent p1 = null;
+		Scanner sc1 = new Scanner(System.in);
+
+		System.out.println("누구차 타고 여행갈래? 1-부모차 2-자녀차");
+		int aa = sc1.nextInt();
+		if (aa == 1) {
+			p1 = new Parent();
+			p1.car();
+		} else if (aa == 2) {
+			p1 = new Child();
+			p1.car();
+		}
+
+	}
+
+}
+
+class Parent {
+	public void car() {
+		System.out.println("부모차 드라이브");
+
+	}
+}
+
+class Child extends Parent {
+	public void car() {
+		System.out.println("자녀차 여행");
+	}
+}
+---------------------------
+[다중상속]
+
+다이아몬드 문제때문에 자바에서는 다중상속이 구현되지않는다.
+
+----------------------------
+[인터페이스]
+클래스 : 완벽설계도
+인터페이스  : 설계도의 밑그림
+다중상속 해결, 함수의 원형(상부구조), 협업
+특징 : 메소드는 선언만,구현은 x,구현은 child 클래스에서 반드시 구현
+
+public class EE {
+
+	public static void main(String[] args) {
+		Na na1 = new Na();
+		na1.isBoat();
+		na1.useDon();
+		na1.manaDon();
+		// 설계도를 대충그린 인터페이스 방법으로 다중상속한것
+	}
+
+}
+interface Samchon {
+	void isBoat();// 선언 o,구현x, 내용은 child class에서 구현
+	// public x
+}
+
+class Booja {
+	public void manaDon() {
+		System.out.println("많이 벌었다~");
+	}
+}
+
+class Na extends Booja implements Samchon {// implements(구현)=상속// 구현은 여기서 하자
+//빨간줄이 뜨면 add unimplements 를 이용하여 자동으로 생성하자
+	
+	@Override
+	public void isBoat() {
+		System.out.println("보트 여행 다니자~~~");
+	}
+
+	public void useDon() {
+		System.out.println("많이사자");
+	}
+}
+----------------------------
+jikwon 클래스를 사용하되 interfave, Chef 클래스를 상속하여 출력하시오
+
+
+셰프는 요리 잘해 --> Chef 클래스
+포장은 간단 예쁘게
+손님취향에 맞게
+셰프는 요리잘해2
+
+
+
+public class FF {
+
+	public static void main(String[] args) {
+		AA a1=new AA();
+		Jikwon j1=new Jikwon();
+		j1.cook();
+		a1.rap();
+		a1.client();
+		a1.cook();
+	}
+
+}
+
+interface wrap {
+	void rap();
+}
+
+class Jikwon {
+	public void cook() {
+		System.out.println("셰프는 요리잘해");
+	}
+}
+
+class Chef extends Jikwon {
+	public void cook() {
+		System.out.println("셰프는 요리잘해2");
+
+	}
+
+	public void client() {
+		System.out.println("손님 취향에 맞게");
+	}
+}
+
+class AA extends Chef implements wrap {
+
+	@Override
+	public void rap() {
+		System.out.println("포장은 간단 예쁘게");
+	}
+
+}
+
+--------------------
+인터페이스는 implements ,,,,로 여러개 생성,상속가능
