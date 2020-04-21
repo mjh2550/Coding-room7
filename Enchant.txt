@@ -1,0 +1,179 @@
+	//총 4단계(레어-에픽-유니크-레전더리)
+				//10가지옵션중 3개가 균등하게 출력, 중복가능
+				//등급업 확률 
+				//레어-에픽(20%)
+				//에픽-유니크(10%)
+				//유니크-레전더리(5%)
+				
+				//주사위 굴려서 랜덤숫자 3개출력하는데, 그 숫자를 문자로 연동?-숫자로 문자출력시킬 방법 연구
+				//첫줄은 상위등급, 2,3번째는 동일등급 출력
+				//시도횟수는 무한
+		Acube ac = new Acube();
+
+		Scanner sc1 = new Scanner(System.in);
+		ac.num = 1;
+		ac.swc = 0;
+		while (ac.swc != 1) {// 레어등급
+
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("현재등급 : 레어");
+			System.out.println("주사위 굴리기 :press any key");
+			ac.dice = sc1.next();
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			if (aa >= 12) {
+				System.out.println("***에픽 등급 업!!***");
+				ac.num++;
+				System.out.println("현재등급 : 에픽");
+				System.out.println("**********");
+				System.out.println("**" + ac.St_u[(int) aa] + "**");
+
+				double bb = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) bb] + "**");
+
+				double cc = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) cc] + "**");
+				System.out.println("**********");
+				break;
+			}
+			
+			System.out.println("현재등급 : 레어");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_r[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 13);
+			System.out.println("**" + ac.St_n[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 13);
+			System.out.println("**" + ac.St_n[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+
+		}
+		while (ac.swc != 2) {// 에픽 등급
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("주사위 굴리기 :press any key");
+			ac.dice = sc1.next();
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			if (aa >= 18) {
+				System.out.println("***유니크 등급 업!!***");
+				;
+				ac.swc++;
+				System.out.println("현재등급 : 유니크");
+				System.out.println("**********");
+				System.out.println("**" + ac.St_u[(int) aa] + "**");
+
+				double bb = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) bb] + "**");
+
+				double cc = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) cc] + "**");
+				System.out.println("**********");
+				ac.num++;
+				break;
+			}
+
+			System.out.println("현재등급 : 에픽");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_e[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 18);
+			System.out.println("**" + ac.St_r[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 18);
+			System.out.println("**" + ac.St_r[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+		}
+
+		while (ac.swc != 3) {// 유니크 등급
+
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("주사위 굴리기 :press any key");
+			ac.dice = sc1.next();
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			if (aa >= 19) {
+				System.out.println("***등급 업!!***");
+				;
+				ac.swc++;
+				System.out.println("현재등급 : 레전더리");
+				System.out.println("**********");
+				System.out.println("**" + ac.St_l[(int) aa] + "**");
+
+				double bb = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_u[(int) bb] + "**");
+
+				double cc = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_u[(int) cc] + "**");
+				System.out.println("**********");
+				ac.num++;
+				break;
+			}
+			
+			System.out.println("현재등급 : 유니크");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_u[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_e[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_e[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+		}
+
+		while (ac.swc != 4) {// 레전더리 등급
+			
+			
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("주사위 굴리기 :press any key");
+			System.out.println("멈추려면 'gg'를 입력하세요");
+			ac.dice = sc1.next();
+			
+			if (ac.dice.equals("gg")) {
+				System.out.println("큐브를 종료합니다");
+				break;
+			}
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			
+			System.out.println("현재등급 : 레전더리");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_l[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_u[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_u[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+		}
+	}
+}
+
+class Acube {
+	int swc;
+	int num;
+	String dice;
+	String[] St_n = { "공격력+3%", "마력+3%", "STR+10", "DEX+10", "INT+10",
+			"LUK+10","STR+10", "DEX+10", "INT+10",
+			"LUK+10", "STR+10", "DEX+10", "INT+10",
+			"LUK+10" };//노말 - 14개옵션
+	String[] St_r = { "공격력+3%", "마력+3%", "STR+3%", "DEX+3%", "INT+3%", "LUK+3%", "STR+10", "DEX+10", "INT+10",
+			"LUK+10", "STR+3%", "DEX+3%", "INT+3%", "LUK+3%", "STR+10", "DEX+10", "INT+10",
+			"LUK+10","크리티컬 확률 10%","크리티컬 확률10%" };//레어 -19개옵션
+	String[] St_e = { "공격력+6%", "마력+6%", "STR+6%", "DEX+6%", "INT+6%", "LUK+6%", "STR+3%", "DEX+3%", "INT+3%",
+			"LUK+3%","STR+6%", "DEX+6%", "INT+6%", "LUK+6%", "STR+3%", "DEX+3%", "INT+3%",
+			"LUK+3%","크리티컬 확률 20%","크리티컬 확률20%","몬스터 방어율 무시 15%","몬스터 방어율 무시 15%" };//에픽-21개옵션
+	String[] St_u = { "공격력+9%", "마력+9%", "STR+9%", "DEX+9%", "INT+9%", "LUK+9%", "STR+9%", "DEX+9%", "INT+9%",
+			"LUK+9%","STR+9%", "DEX+9%", "INT+9%", "LUK+9%", "STR+9%", "DEX+9%", "INT+9%",
+			"LUK+9%","크리티컬 확률 30%","크리티컬 확률30%","몬스터 방어율 무시 35%","몬스터 방어율 무시 35%" };//유니크-21개옵션
+	String[] St_l = { "공격력+12%", "마력+12%", "STR+12%", "DEX+12%", "INT+12%", "LUK+12%", "STR+12%", "DEX+12%", "INT+12%",
+			"LUK+12%","STR+12%", "DEX+12%", "INT+12%", "LUK+12%", "STR+12%", "DEX+12%", "INT+12%",
+			"LUK+12%","크리티컬 확률 40%","크리티컬 확률40%","몬스터 방어율 무시 40%","몬스터 방어율 무시 40%" };//레전더리-21개옵션
+
+}
