@@ -1,0 +1,201 @@
+417
+=======================
+substring (a,b)
+a는 0123 -인덱스를 따라감
+b는 1234 
+>>a번째부터 b개 추출
+
+-----------------------
+전광판 프로그램 만들기
+
+
+
+	public static void main(String[] args) {
+		String s1="I LOVE YOU";
+		sub(s1);
+		
+//서브스트링 버퍼
+		
+		
+
+}
+
+	private static void sub(String aa) {
+	
+		for(int i=0;i<20;i++) {
+			aa=aa.substring(1,aa.length())+aa.substring(0,1);
+			System.out.println(aa);
+		}
+
+--------------------
+스트링버퍼
+스트링 클래스는 변경이 불가능하지만 String aa="aaaa";
+스트링 버퍼는 변경이 가능하며 클래스보다 메모리를 적게 소비하고, 빠르다
+StringBuffer aa=new StringBuffer;
+
+-------------------
+객체
+
+//언어의 종류
+		//1.절차형 언어(C언어) :순서가 바뀌면 안돼
+		//2.객체 지향형 언어(OOL:Object Oriented Language)
+		
+		//객체의 사전적 정의
+		//1)모든 사물
+		//2)클래스-객체
+		//OOP(OOP:Object Oriented Program)
+		
+		//객체의 2가지 특징
+		//1.속성(특징,외양,색....) 예) 자동차
+		//2.행동(run, stop,turn)
+		
+		//순서는 핸드 메이드 카 만드는것이랑 똑같다.
+		
+		//객체 사용법 3가지-모든언어가 비슷 C++,C#,java....
+		//1.객체.속성=값
+		//mycar.color="black"; // 내차는 검정색이야 //기억창고 color에 "black"
+		//       메소드=행동
+		//2.객체.매소드();
+		//mycar.travel();//차타고 여행갈거임
+		
+		//3.객체.속성
+		//mycar.color //어떤차냐??
+		
+		
+		/////////////////////////////
+		/*//OOP 작성 3단계
+		//1.설계(정의)
+		 * 
+		 *  class Car{
+		 *  color
+		 *  door
+		 * }
+		
+		//2.제작
+		 * ---
+		 * 찾아갈일이 없을때는 이렇게만든다..		
+		 *  new Car();
+		 * 
+		 * 설계도-클래스
+		 * 그대로 new Car를 heap memory에 만듦//크기제한 x
+		 *======
+		 * color
+		 * door
+		 * run() >>객체 : 클래스에서 만들어진 결과물 = 인스턴스
+		 *======
+		 *---
+		 * Car mycar= new Car();
+		 * Stack memory에 mycar잡힘(1000번지 가리킴)
+		 * color 찾을때는 mycar의 color방
+		 * 이때, mycar는 객체참조변수 가 된다 : Stack에 잡히고, 주소를 가리킴
+		 * 
+		//3.사용
+		 * (1)객체.속성=값
+		 *  mycar.color="red"; 
+		 *  
+		 * (2)객체.메소드
+		 * mycar.run();
+		 * ======
+		 * red
+		 * door
+		 * run()
+		 * ======
+		 * (3)객체.속성
+		 * sysout(mycar.color);//red
+		 * 
+		 *-------------------
+		 *클래스 종류
+		 *1) user defined class(사용자 정의 클래스)
+		 * 3단계를 다 개발자가 구성
+		 *
+		 *2) 내장클래스
+		 * 2-3단계만 구성, 3단계만 구성하기도 한다
+		 *
+		 * 
+*/
+		
+		
+		 * OOP 라 하면 캡슐화, 상속, 추상화, 다형성 이라는~~~
+		 * 1) 캡슐화: 정보은닉( 필드와 메소드를 묶어서...) // encapsulation
+		 * 2) 상속: 상위것을 하위에서 상속
+		 * 3) 추상화: 같은 형태에 이름을 하나 정해줌, 사과배감은 과일
+		 * 4) 다형성: polymorphism , 하나가 여러가지일을 함.
+		 * 추상메소드가 overriding되어 사용됨
+		 * 
+		 * overloading		vs		overriding
+		 * (함수중복)					(재사용)
+*//접근지정자 access modifier :외부 접근 4종류
+				 * private : 같은 클래스에서만 접근가능
+				 * public : 외부 클래스에서도 접근가능
+				 * (default)아무것도 안씀 : 같은 패키지 접근가능 
+				 * protected : 상속에서만*/
+		 */
+
+//setter와 getter : private된 속성들을 참조하기위해서 도우미메소드를 통해 속성을 호출하기 위해 사용함
+
+public void setJong(String jong) {
+			this.jong=jong;//setter
+		}
+		public void setKa(int ka) {
+			this.ka=ka;
+		}
+			
+			}
+			public int getKa() {
+				return ka;
+			}
+			public void setKa(int ka) {
+				this.ka = ka;
+
+
+==============
+
+
+
+
+
+package Enchant001;
+
+
+
+public class Cube_001 {
+
+	public static void main(String[] args) {
+		//총 4단계(레어-에픽-유니크-레전더리)
+				//10가지옵션중 3개가 균등하게 출력, 중복가능
+				//등급업 확률 
+				//레어-에픽(20%)
+				//에픽-유니크(10%)
+				//유니크-레전더리(5%)
+				
+				//주사위 굴려서 랜덤숫자 3개출력하는데, 그 숫자를 문자로 연동?-숫자로 문자출력시킬 방법 연구
+				//시도횟수는 무한
+				
+				
+				String [] St_r= {"공격력+3%","마력+3%","STR+3%","DEX+3%","INT+3%","LUK+3%",
+						"STR+10","DEX+10","INT+10","LUK+10"};
+				String [] St_e= {"공격력+6%","마력+6%","STR+6%","DEX+6%","INT+6%","LUK+6%",
+						"STR+3%","DEX+3%","INT+3%","LUK+3%"};
+				String [] St_u= {"공격력+9%","마력+9%","STR+9%","DEX+9%","INT+9%","LUK+9%",
+						"STR+9%","DEX+9%","INT+9%","LUK+9%"};
+				String [] St_l= {"공격력+12%","마력+12%","STR+12%","DEX+12%","INT+12%","LUK+12%",
+						"STR+12%","DEX+12%","INT+12%","LUK+12%"};
+				
+				double aa=(int)Math.ceil(Math.random()*10);
+				int bb=(int)aa;
+				if(aa >= 8) 
+				{
+					System.out.println("******등급 업!!*******");
+				}else 
+						{
+					System.out.println(St_e[bb]);
+					System.out.println(St_r[bb]);
+					System.out.println(St_r[bb]);
+							
+						}
+				
+				
+
+	}
+
+}

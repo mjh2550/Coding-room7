@@ -1,0 +1,215 @@
+408수요일
+============
+[조건문]
+if-함수(자바에서는 메소드라고 함)
+
+head,body 로 구성됨
+--------
+1형식
+if(조건)//head
+{     //body //block
+
+yes;//statement(STMT)
+}
+-------
+2형식
+if(조건)
+{
+sysout("맞으면 이거")
+}
+else
+{
+sysout("아니면 이거")
+}
+
+Q)
+210이 3의배수냐?
+210%3==0
+
+
+Q)
+변수 kab에 75가 있을때
+이수가 3의 배수이면 3의배수 5의배수이면 5의배수
+3과 5의 동시배수이면 동시배수를 출력하는 프로그램을 작성하시오
+
+3의 배수인가?
+5의 배수인가?
+
+-------------------------------------------------------------
+		int kab =5;
+			if(kab%3 == 0 && kab%5 == 0)
+				{
+				System.out.println("동시배수");
+				}
+			else if(kab%5==0)
+					{
+						System.out.println("5의배수");
+					}
+			else if(kab%3==0)
+				{
+					System.out.println("3의배수");
+				}
+			else
+			{
+				System.out.println("셋다아냐");
+			}
+---------------------------------------------
+Q)
+몸무게 /키의 제곱
+78 /180
+78/ 미터키의 제곱 (1.8의제곱)
+동시 배수인가?
+
+	 	
+30이상 비만
+25-30 과체중
+20-25 보통
+20미만 저체중
+------------------------------------------
+				if (bmi >= 30)
+				{
+					System.out.println("비만");
+				}
+					else if (bmi >= 25 && bmi > 30)
+					{
+						System.out.println("과체중");
+					}
+					else if (bmi >= 20 && bmi < 25)
+						System.out.println("보통");
+
+------------------------------------------
+		Scanner sc1=new Scanner(System.in);
+		/*System.out.print("이름은:");
+		String name=sc1.nextLine();*/
+		System.out.print("당신의 키는:");
+		int tall=Integer.parseInt(JOptionPane.showInputDialog("키는?"));
+		//int tall=Integer.parseInt(sc1.next());
+		//int tall=sc1.nextInt();
+		System.out.print("당신의 몸무게는:");
+		int weight=Integer.parseInt(JOptionPane.showInputDialog("몸무게는?"));
+		//int weight=Integer.parseInt(sc1.next());
+		//int weight=sc1.nextInt();
+
+---------------------------------------
+double bmi =mom/Mate.pow(mki,2);
+
+Mate.pow(mki,2) : 2제곱하는 함수
+
+클래스 안에는 속성,메소드
+
+sysout 화면출력명령
+키보드입력명령을 쓰기위해서는 scanner클래스를 써야함
+scanner는 다 문자로 받음
+그래서 integer.parseint("내용",진수)를 쓰면 문자열을 숫자로 변환시킬 수 있다(숫자의 따옴표를 뗀다- "문자"를 숫자로 변환x).
+1)사용자정의 클래스(user difined class)
+2)내장 클래스
+Scanner ==>내장클래스
+Scanner sc1 = new Scanner(system.in); //sys아웃 반대,이 문법을 쓸 때는 임포트를 해야함
+
+System.out.print("이름은:");
+String name=sc1.nextLine(); //문자열은 next나 nextline으로 받는데,nextline은 빈칸포함하여 받음 next는 빈칸제외하고 받음
+System.out.print("당신의 키는:"); //안내메시지(굳이없어도됨)
+sc1.nextint(); //키보드로 (정수를)입력 받으려는 문법
+int ki=sc1.nextint();
+
+패키지 :지금내가 들어가있는 클래스가 있는 방(영역)을 패키지로 표현
+임포트 :다른패키지를 가져다 쓸때
+*자동 임포트 ctrl + shift + o
+
+시스템(system.in)은 생략가능, 스캐너는 몰라서 써줘야함
+
+패키지 -임포트 순서
+
+1프로젝트 1job원칙
+
+--------------
+패키지는 소문자
+
+[형변환]
+
+1)묵시적(암시적) 형변환
+short sh1=100;
+int i1=sh1;//작은걸 큰거에 넣어서 에러안남
+
+2)명시적 형변환
+int soo7=2345678;
+short sh2=(short)soo7;//작은수일 경우 형변환하여 입력가능
+
+
+String aaa="kongjoo";//heap 메모리에 "공주"라는 단어 기억, "공주"의 시작위치 N번지를 참조변수 aaa가 가지며,번지주소가 stack메모리 aaa에 저장됨. c언어에서는 이것을 포인터 라고함
+-----------
+[null pointer error]
+---
+String ppp=null;//번지수를 모른다(기억창고에 잡힌게아님)
+String qqq="";//번지수 존재함(빈 문자열 : 길이가 0인 문자열)
+System.out.println(qqq.length()>0);//false
+System.out.println(ppp.length()>0);
+/*Exception in thread "main" java.lang.NullPointerException at hhhhhhh.EX1.main(EX1.java:10)*/ >> 널포인터에러
+------
+String aa="ondal";
+String bb="ondal";
+
+if(aa==bb) // 번지 비교
+System.out.println(aa+"\t"+bb);// 내용이 찍힌다
+//문자열이 같으면 번지수가 같은 곳에 저장됨
+
+if(aa.equals(bb)) //내용비교,괄호있으면 메소드
+System.out.println(aa+"\t"+bb);
+
+***문자열에서 ==는 번지비교, .equals()는 내용비교이므로 헷갈리지 말자
+
+String cc=new String("ondal");
+String dd=new String("ondal");//내용은 같고 번지가 다르다
+
+int ff=3; //stack memory
+Object gg=ff;//object도 자료형임 근데 얘는 heap메모리에 들어간다
+//스택을 힙형태로 바꿔줌 : boxing
+int hh=(int)gg;//힙을 스택형태로 바꿔줌 : unboxing
+====================
+[조건문:switch]
+Q)
+값을 입력받아 1이면 종로로 가고 2이면 강남으로 가자라는 문장을 출력하는 프로그램을 작성하시오(단, 1도 2도아니면 바다로 여행간다)
+
+-----------
+switch(조건)
+{
+case 얼마1: //얼마냐??  <<<문자열OK,정수OK,실수X
+처리;//맞으면 처리
+break;//빠져나옴   <<break는 꼭 있어야 함
+
+case 얼마2: 
+처리;
+break;
+
+default:
+처리;
+break;
+}
+-----------
+
+Q)월을 입력받아 해당월의 날짜수를 출력하시오(3번 찍어서 만들고, switch 문 사용)
+
+		Scanner sc1=new Scanner(System.in);
+		System.out.println("월을 입력하세요");
+		int m1=Integer.parseInt(sc1.next());			
+		switch(m1)
+		{
+		case 1: case 3: case 5: case 7: case 8:
+		case 10: case 12:
+			System.out.println("31일");
+			break;
+		case 4: case 6: case 9: case 11:
+			System.out.println("30일");
+			break;
+		default:
+			System.out.println("28일");
+--------------------------------------------------------
+
+System.out.println((int)Math.ceil(45*Math.random()));
+
+
+// 0~1 0.0000001~ 0.999999
+// 45* 45자리 0.000001 ~ 44.xxxxxx
+// 1~45 중 랜덤수
+//ceil : 올림 
+//floor : 버림 

@@ -1,0 +1,134 @@
+414
+================================
+//array : 고정길이 , one data type
+		//배열은 자료형 하나만 넣을 수 있고, 늘리거나 줄일 수 없다(처음에 많이 할당해야함)
+		int [] k2 =new int[3];//1차원 배열//단층아파트
+		int [] [] k=new int [2][3];//2차원 배열//고층아파트 //2층X3호
+				
+		
+		
+		k[0][0]=50; //층:행 호수:열
+		k[1][2]=100;
+		System.out.println(k[0][0]+"\t"+k[1][2]);
+		
+		/*int [][] k5 = {10,20,30,40,50,60}; //메모리는 2차원배열이 없다.
+		 */
+		 int [][] k5= {{10,20,30},{40,50,60}}; //선언은 이런식으로
+		 System.out.println();
+		 for (int i=0;i<2;i++) {
+			 for (int j=0 ;j<3 ; j++) {
+				 System.out.println(k5[i][j]+"\t");
+			 }
+				 System.out.println();
+		 }
+		 
+		 for (int i = 0; i < k5.length; i++) {//k5.length는 행의 숫자를 기억
+			for (int j = 0; j < k5[i].length; j++) {//k5[i]는 열의숫자를 기억
+				System.out.println(k5[i][j]+"\t");
+			}
+
+-----------------------------
+//input design
+		//성별나이를 입력받는다 (입력의 끝은 9 9 들어온다)
+		
+		//output
+		//	10대   20대   30대   계
+		//남    10  20   15  45
+		//여  29   23   30   82
+		//계   39   43  45   127
+
+
+
+
+
+
+int [] [] k= new int [3][4];
+		Scanner sc1=new Scanner(System.in);
+		//two-read방식 : 2번 입력 받기
+		System.out.println("(0 남자,1여자) (0-10대,1-20대,2-30대)");
+		System.out.println("성별 나이순으로 입력 : ");
+		int b=sc1.nextInt();
+		int a=sc1.nextInt();//성별은 0,1 나이는 0,1,2 
+		
+		while(b !=9) {//9만나면 끝
+			k[b][a]+=1;			k[b][3]+=1;//1누적 더하기
+			k[2][a]+=1;			k[2][3]+=1;//행렬 총계에 1씩추가
+			System.out.println("(0 남자,1여자) (0-10대,1-20대,2-30대)");
+			System.out.println("성별 나이 : ");
+			b=sc1.nextInt();
+			a=sc1.nextInt();
+		}
+		System.out.println("10대 \t 20대 \t 30대 \t  계");
+				for (int i = 0; i < k.length; i++) //출력문
+				{
+					for (int j = 0; j < k[i].length; j++) 
+						{
+						
+							System.out.print(k[i][j]);
+							System.out.print("\t");
+						}
+					System.out.println(" ");
+				}
+
+---------
+//명령어 인자 ==>> 명령행인자 (commandline argument)
+		//예) String[] args 문자배열을 받음
+		/*copy (cp) aa.txt bb.txt//파일같은 이런인자가 오면 args신경써야함
+		 * 
+		 * cotok 은빛공주
+		 * 30+80 -->110
+		 * 실제명령은 Deohae 30 80
+		 * (30 80 >> 명령행인자 : (String[] args(argument)배열)때문에 문자로잡힘)
+		 * args[0] args[1]
+		 * 110
+		 EXE4140001.java >> EXE4140001.class 
+		                   "30" -->30    */ 
+		//메인[]에 값이 있냐? 값 2개면 길이가 2
+		if(args.length !=2) {
+			System.out.println("멘탈강화!!!!!!!!");
+			System.out.println("사용법은 java 패키지명.자바클래스명 숫자 숫자");
+			return;//강제종료  //c: exit(숫자) //c# : Environment.Exit(숫자)
+			//system.exit(숫자)
+		}
+		
+		
+		
+		System.out.println(Integer.parseInt(args[0])+
+				Integer.parseInt(args[1]));
+						//"80" --->80
+		//shell로 실행해보기//
+		//네비게이터 > 클래스파일있는 패키지폴더 복사후 >바탕화면에 붙여넣기>쉬프트 우클릭으로 바탕화면에서 쉘 켜기
+		// 패키지명.클래스명 30 80 => 110
+
+--------------
+//String과 char 변환하기
+		
+		//문자열 kongjoo 를 기억시켜놓고 j를 b로 변경하여
+		//kongboo를 출력하시오(단, String to char [] 을 사용하시오 또한 메소드 2형식으로 푸시오)
+		
+		String s="kongjoo";
+		String bada=kaja(s); //2+3형식 kongjoo 보내
+		System.out.println(bada);
+
+	}
+
+	private static String kaja(String s) {
+		char [] ch2=s.toCharArray(); //String===>char[] 문자열 배열을 문자char들 배열로
+		//char배열 ch2 생성 = 입력받은 String 'kongjoo'를 char배열로 변환
+		ch2[4]='b';//5번째 글자 바꾸기
+		String s7=new String(ch2);//char배열을 다시 String 문자열 배열로
+		return s7;
+-------------------
+//정수 5개 bae배열에서 30이 몇번째인지 순차 검색하시오 (0번째부터)
+		
+		int [] bae= {10,20,30,40,30};//초기치
+		
+		for (int i=0;i<5;i++)
+		{
+			if(bae[i]==30)
+			{
+				System.out.println("30은"+(i+1)+"번째");
+				break;
+			}
+		}
+	

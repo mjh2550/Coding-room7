@@ -1,0 +1,96 @@
+401수요일
+
+=================
+
+
+q)
+
+각 직급별 인원수를 조회하되 사용되지 않은 직급이 있다면 해당 직급도 출력결과에 포함시키시오. 그리고 직급별 인원수가 5명 이상인 직급만 출력결과에 포함시키시오
+
+select decode(count(*) 직급별인원수, j.job_title 직책
+from employees e,jobs j
+where e.job_id = j.job_id
+group by j.job_title;
+
+
+
+
+
+
+
+
+
+
+q)
+직원의 이름, 부서id, 급여를 조회하시오. 
+그리고 직원이 속한 해당부서의 최소급여를
+ 마지막에 포함시켜 출력하시오
+
+>>내가푼코드
+select distinct e.first_name 이름, e.department_id 부서id, e.salary 급여,s.최소급여
+from employees e,jobs j,(select min(salary) 최소급여,department_id 부서아이디
+                    from employees
+                    group by department_id) s
+where e.department_id = s.부서아이디
+order by e.department_id;
+
+
+>>정석코드
+select first_name, department_id,salary,
+(select min(salary)from employeeswhere department_id = e.department_id) 평균급여
+from employees e;
+
+
+-------------------------------
+centos7 다운
+
+ctrl+L을 사용하여 토픽 만들고
+설명 삽입은 상단메뉴 삽입-독립토픽으로 삽입
+배경색 등은 설명하나 꾸민후 우클릭-스타일복사 한 후 해당 독립토픽에 놓고 우클릭-스타일 붙여넣기로 조정
+
+xmind8 다운-ERD 만드는 프로그램
+
+pixabay-그림소스 다운 사이트
+
+jdk 다운
+
+
+컴파일언어, 비컴파일언어(interpreter) :평소 번역x, 실행시킬때만 번역함
+
+c --> 영어  -------> 기계어 --->실행
+	  compiler
+c : 속도가 빠름
+예)미사일 추척 프로그램
+--------------------------------
+
+*java : 플랫폼을 거치기 때문에 시간이 걸림
+
+aa.java(영어) ===>byte code(aa.class) ======>OS(window, linux(pc버전 유닉스) ,unix)
+                         jvm( os환경에 맞게 컴파일 : just-in-time compiler(jitter))
+tool : eclipse
+jdk
+
+*c#
+aa.cs ==========> MSIL ==============> window(only)
+   CLR(common language runtime)
+tool : visual studio code
+
+.NET : ip address + network(anylanguage,anydevice가 목적)
+
+----------------------------------
+eclipse - more package - eclipse IDE for java EE Developers 다운
+
+---------------------------------
+자바구조
+*.class(기계어) 집합 >> .jar
+
+
+프로젝트명 : 대문자로 작성
+   package(생략가능) 방 = 이름 안섞이게 하려고
+  class
+    메소드(main)
+
+rt.jar >> java.util >> date.class 날짜클래스
+주석달기 : 컨+쉬+/ <-> 컨+쉬+\
+자동 import : 컨+쉬+o
+단축키 리스트 : 컨+쉬+l

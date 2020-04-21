@@ -1,0 +1,99 @@
+	XE : SID 이름 (express edition) : 무료판
+
+	DBMS(Database Management System)
+	ORACLE, DB2(IBM), MSSqlSever(MS) , mysql
+	
+	oracle 7 7i 8 8i 10g 11g 12c 18c
+			(grid:분산처리)(cloud)
+
+1.오라클 설치
+오라클 홈페이지
+18c xe검색 
+prior Release Archive
+
+2.ipconfig
+cmd
+ipconfig /all
+이더넷 옆 아무것도 안쓰여진 부분
+ipv4(기본설정 부분) : 나의 ip주소
+
+\\192.168.58.100 -강사pc 아이피
+\\192.168.58.17
+
+시작-모든프로그램-Oracle DB 11g Ex
+-> Run SQL Command Line 실행
+lock 해제 및 패스워드 변경
+
+conn / as sysdba
+alter user hr identified by hr account unlock
+
+3.jdk 설치
+(java development kit)
+oracle.com 접속
+jdk se검색
+jdk-se8u221..
+jdk download클릭
+window64에있는 jdk08u....클릭 설치
+
+4.sqldeveloper 설치
+
+java.sun.com
+'sql deverloper'검색
+SQL Developer 19.4 Downloads 선택 후 64비트 설치(jdk 미포함버전)
+
+압축풀고
+SQLdeveloper.exe 실행
+jdk 경로 설정(browse클릭)
+(C:\Program Files\Java\jdk1.8.0_241)
+[sqldeveloper의 jdk기본버전은 1.8]
+환경설정 import 나오면 아니요 선택
+
+5.접속
+좌상의 + 기호
+접속이름 hr(임의로) - 이름pw는 hr hr - 비번저장체크 hr hr hr
+(참고) 접속이름은 아무거나, 사용자이름은 계정명 만일 관리자계정으로 접속할 경우라면 system or sys 사용)
+	비밀번호 자리에는 계정비밀번호
+	host 자리에는 localhost or 원격 PC의 IP주소를 입력
+	port는 1521 그대로
+	sid에는 "전역"DB 명 입력(xe입력, 만일 별도 입력하지 않았으면 orcl
+
+test 후 접속
+빈화면 나오면
+좌상에 hr보이고 +눌러 0 아래테이블 눌러 - 테이블 보면된다
+
+select * from employees; 입력후 커서를 해당줄에 놓고 컨트롤 엔터 누르면 결과출력됨
+
+6.사용하기
+sqldeveloper 바로가기 만들기
+hr.sql은 연습용으로 사용, 새로운 CRUD(Create,Read,Update,Delete)작업시 hr.sql을 다른이름으로 저장하여 저장해놓는다
+*최근파일 불러오는 단축키는 컨트롤+=
+
+주석은 -- 또는 /* */이다
+주석 실행/해제는 컨트롤+쉬프트+/ 또는 컨트롤+/를 토글한다
+주석을 만들려면 만들곳을 블럭시킨후 컨트롤 쉬프트 / 사용하면 문장앞에 --붙으면서 주석이된다.
+
+
+alt + quote : 원하는 문장만큼 block 후 alt + ' 할때마다 대소문자 변경 3가지 토글
+
+예) 단어 block일때
+Select, SELECT, select
+
+전체문장 block 일때
+SELECT * FROM employees;
+select * from EMPLOYEES;
+Select * From Employees;
+
+결과에 놓고 - 마오- 하면 전체행수도 알수 있다.
+결과에 놓고 -마오-익스포트를 선택하여 pdf text(csv)형식의추출이 가능하다
+
+예) .pdf로 export하면 실선 table이 그려지고
+다음내용들이 들어있는 .pdf문서가 만들어진다.
+
+
+(참고) 자동커밋하기(commit/ rollback)
+ 이클립스에서는 디폹느가 자동커밋상태이고
+ sqldeveloper는 디폴트가 자동커밋해제상태임
+ >> 필요시 도구-환경설정 -데이터베이스-고급-자동커밋 체크
+ >> 기본사용은"자동커밋"없이 F11을 눌러서 사용함(롤백은 F12)
+ >> 문장입력후 ctrl+enter로 실행 후 영구저장하려면 F11을 누름
+

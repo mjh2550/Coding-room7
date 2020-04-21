@@ -1,0 +1,211 @@
+3/24화 
+-----------------
+데이터베이스 특징 - not raw data
+ (1) 공유데이터
+ (2) 통합데이터 - 중복을최소화(중복x,모든데이터를 다 갖고있어야됨)
+ (3) 저장데이터 
+ (4) 운영데이터
+
+ 테이블 - 표
+  SELECT * FROM [테이블]
+ modeler - db 개발자
+===================
+	1.SQL언어
+
+ 1)Query문 : select(CRUD의 R)
+ 2)dml(data manipulation language) 데이터 조작(작동)언어
+ insert, delete, update(crud의 cdu)
+ 3)ddl(data defintion language)
+  create,...
+
+ 1-1.셀렉트문
+ select* from employees;
+ --조회문 * 모든 칼럼 from 테이블명;
+
+ select employee_id first_name, salary from employees;
+
+ keyword는 대문자
+ 절단위로 줄을 바꿈
+ 문장의 끝에는;
+
+ SELECT * 
+ FROM employees;
+
+ 개발자가 여러명, 작성시 parsing을 여러번 하는걸 막아줌
+ 
+ casing 기법
+ 1) pascal casing -첫, 뒤 대문자
+  예)BagPrice
+ 2) camel casing -뒤에 첫문자 대문자
+  예)bagPrice
+
+=======================
+
+ ERD(entity relation diagram)
+칼럼명들을 모아둔 다이어그램
+
+ 칼럼명에 별명(ALIAS)달기
+ SELECT first_name as 이름 , last_name as 성
+ From employees;
+
+ SELECT first_name 이름, last_name 성
+ From employees;
+
+ SELECT first_name 사원 이름, last_name 성
+ From employees; >> 별명은 붙어있어야 함 혹은 ""쓰기
+
+ SELECT first_name "사원 이름", salary*12 "일년 연봉"
+ From employees;
+
+ SELECT first_name "사원 이름", salary*12 "1년 연봉"
+ From employees;
+
+ SELECT first_name "사원 이름", salary*12 1년연봉
+ From employees; >> 숫자는 ""필요
+
+ select last_name, '내가우리반비담' , first_name "멋진 이름" from employees; >> DB에서 따옴표는 무조건 작은 따옴표, 큰 따옴표는 문자열 표기시 사용
+
+ 기본은 작은따옴표, 밑줄(under_bar)
+서울.강남구.
+서울_강남구_
+
+SQL : Structured query language (구조화된 조회 언어)
+
+ 
+
+"babo"+"ondal"
+
+baboondal
+
++ --> ||(접합엽산자, 연결연산자)
+
+'babo'||'ondal'
+
+
+Q)
+성이 steven 인 사람의 성과 연봉출력
+
+Steven 씨의 봉급은 5000000 원 입니다.
+
+> SELECT first_name || '씨의 봉급은' as 이름, salary || '원 입니다' as 연봉 from employees WHERE FIRST_NAME = 'Steven';
+
+
+Q)
+각 사원의 이름과 입사일, 연봉을 출력
+
+
+> select first_name as 사원명, Hire_DATE as 입사일, salary*12 연봉 
+ from employees;
+
+Q)
+각 부서의 아이디와 부서명 출력
+
+>select department_ID as 부서아이디, department_NAME as 부서명
+ from departments;
+ 
+Q)
+급여가 5000보다 큰 사원정보를 모두 출력
+
+
+> select *
+ from employees
+ where salary > 5000;
+
+ where : 조건
+
+*자바랑 다름 sql은 =이 같다 로 사용
+자바는 ==이 같다 로 사용함 
+
+같지않다 != , <>
+
+
+Q)
+사원번호가 103번인 사원의 이름, 입사일, 부서번호를 조회하시오
+
+> select last_name as 사원명, hire_date as 입사일, department_id as 부서번호
+ from employees
+ where employee_id = 103;
+
+=====================
+데이터타입(describe)
+
+desc employees;
+
+이름             널?       유형           
+-------------- -------- ------------ 
+EMPLOYEE_ID    NOT NULL NUMBER(6)   
+FIRST_NAME              VARCHAR2(20) 
+....
+SALARY                  NUMBER(8,2) 
+
+varchar = 가변길이 variable character -처리느림
+char = 고정길이 charater
+NUMBER(8,2) = 전체 8자리, 소수 2자리,정수 6자리
+
+
+======================
+
+
+id가 120이상이거나 부서번호가 90번인 사람 조회
+이름, 사원id, 부서번호 출력
+
+> select last_name as 이름, employee_id as 사원id, department_id as 부서번호
+ from employees
+ where (employee_id >=120 or department_id = 90);
+
+추가로 급여가 8000이하인 사원 출력
+
+> and salary < 8000;
+
+*추가는 항상 and문을 쓴다.
+*우선순위를 따라 ()사용을 주의할 것.
+
+
+Q)
+사원테이블을 사용하여 회사의 부서번호를 조회하시오
+(단, 중복은 제거한다)
+
+>select distinct department_id as 부서번호 
+ from employees;
+
+distinct 중복제거하는 내용앞에 서술
+
+
+Q)
+급여가 5000부터 10000사이에 있는 직원의 이름과 급여 출력
+
+>
+ select first_name as 이름, salary as 급여
+ from employees
+ where salary >= 5000 and salary <10000;
+where between 5000 and 10000;
+
+
+Q)
+2004년 이전에 입사한 직원의 이름, 급여, 입사일을 조회하시오.
+
+select first_name as 이름, salary as 급여, hire_date as 입사일
+ from employees
+ where hire_date < '2004-01-01';
+
+2004년에만
+
+select first_name as 이름, salary as 급여, hire_date as 입사일
+ from employees
+ where hire_date >= '04/01/01' and hire_date <= '04/12/31';
+
+Q)
+2004년 이후에 입사한 직원들 중에서 급여가 1300이상 20000이하 직원들의 이름, 급여, 부서id, 입사일을 조회하시오
+
+select first_name as 이름, salary as 급여, department_id as 부서id, hire_date as 입사일
+ from employees
+ where hire_date >= '04/01/01' and salary between 1300 and 20000;
+===============================
+**3/24배운것**
+SELECT문법
+casing기법
+결합연산자
+!=,<>(같지않음)연산자
+데이터타입(describe)
+중복제거(distinct)
+===============================

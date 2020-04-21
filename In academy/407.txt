@@ -1,0 +1,151 @@
+407 화요일
+===================================
+자바 -gosling 외 3명
+
+java structure
+
+package(namespace : 공간을 구분시켜줌)
+class (interface, enumeration, ....)
+	 member --- field(속성)
+		ㄴ method (메소드,행동)
+
+C# 구조
+
+using(namespace : 공간을 구분시켜줌)
+class (interface, enumeration, ....)
+	 member --- field(속성)
+		ㄴ method (메소드,행동)
+
+
+BCPL - B = C언어 - C++ - java
+
+
+public class Helloweb {
+
+	public static void main(String[] args) {
+//메인은 메소드-괄호있는거
+
+/*System.out.printf("출력 서식",출력할 내용);*/
+
+기억창고 = 변수
+자료형 변수명 순서
+int soo1=214123513; //정수, 4바이트
+
+ * 암기할 것 !!!
+ * 1sign bit(부호) + 2^31 비트  (1바이트는 8비트)
+ * 	2바이트 범위 -32768  ~ + 32767
+    4바이트 범위 -2147483648(-2^31) ~ 2147483647(2^31-1) :0 때문에 -1함
+ 
+ * 1) 종류 : 정수, 실수, 문자열
+     2) 길이 : 2바이트, 4바이트 8바이트
+     처음 pc IBM-XT AT 2byte machine
+
+	문법, 로직 익숙해질것 - 문제 많이풀어라
+===================	
+ <memory 구조>
+ heap  memory  편리함,개발자가 조정가능
+ static memory 프로그램 종료시까지 기억됨
+ stack memory  (int aa..) 크기가 한정, 조건이 맞으면 지워짐 ,괄호벗어나면
+ code memory
+ ==============    
+     기본자료형 (stack memory)
+  
+   자료형 + 기억창고이름
+   
+   자료형
+ ----
+  int    정수, 4바이트 (-2147483648 ~ 2147483647)
+  short  정수, 2바이트(- 32768 ~ 32767)
+  byte   정수, 1바이트(-128 ~ 127)
+  long   정수, 8바이트(-920경 ~ + 920경)
+    long dd= 124564206349683496L;
+ ----   
+  double 실수, 8바이트 (배정도실수 -길이가 긴 실수 를 기억할때)
+    123.45 -> 0.12345*10의 3승 --> 0.12345,3(10의 n승) 기억형태
+    				-1.7E308~+1.7E308
+	e:exponent(지수)
+    			-1.7*10의 308승 ~ +1.7*10의 308승
+    double ee = 378.35;
+    
+  float  실수, 4바이트 (단정도실수 -길이가 짧은 실수(6정도)를 기억할 때)
+  			-3.5*10의 38승 ~ +3.4*10의 38승
+  	pi = 3.141592.......
+  			float ff=3.14f;
+  char  한문자, 2바이트 , 작은따옴표
+	char hh='가';
+	char yy='b';
+  -----
+  boolean 논리, 1바이트
+  boolean gg = true
+  false;
+  					
+=============
+String 문자열(여러문자), 큰따옴표, heap memory
+  
+String str="ondal";
+문자열은 heap memory이고 
+참조과정은 Str 갔다가 "ondal"로 감(속도느림)
+번지값을 구하는 것
+=============
+문제푸는 과정
+
+문제분석 - 순서도(flowchart) - coding - run - 결과나옴
+에러 중 제일 첫번째 에러를 찾음(위에서 부터) - run
+ ㄴ syntax error : 글자틀린거 -주로 코딩에서 틀림
+ ㄴ logic error : 원인찾기가 힘들다 - 흐름을 잘 잡을 것
+  
+=============
+연산자
+[산술 연산자] +-*/%
+정수/정수=정수  10/3=3
+정수/실수=실수  10/3.0=3.333...
+실수/정수=실수  10.0/3=3.333...
+실수/실수=실수  10.0/3.0=3.333...
+[관계 연산자]
+크다작다
+> < >= <= ==(같냐?) !=(같지않다!)
+[논리연산자]
+&&(and) ||(or) !
+============
+Q)
+달에서의 몸무게는 지구에서의 몸무게의 17%라고한다
+a=0.17b
+지구에서의 몸무게가 78일때 달에서의 몸무게를 구하시오
+78*b=a/0.17*78
+
+
+int b=78;//지구몸무게
+double a=0.17*b;//달몸무게
+System.out.printf("%.2f",a);
+		
+========
+char ch1='A';//문자상수 //2byte//0-65535
+char ch2='강';//
+System.out.println(ch1);
+System.out.printf("%d\n",(int)ch1);//65, d는 decimal 10진수를의미//형변환,cast
+
+System.out.println(ch2);
+System.out.printf("%d\n",(int)ch2);//44053
+
+System.out.println(Integer.MAX_VALUE);//최대값
+System.out.println(Integer.MIN_VALUE);//최소값 ,int의 클래스형,wrapper
+System.out.println((int)(Character.MAX_VALUE));
+System.out.println((int)(Character.MIN_VALUE));
+character는 문자이기때문에 형변환을 해줘야 값을 출력할수있다.
+==========
+Q)
+i해가 윤년인지 평년인지를 출력하시오
+1년 : 365.2422일
+0.2422 * 4 = 0.9688 = 1일
+
+윤년은
+4의 배수해는 윤년 =4로 나누어 떨어지고
+100의 배수해는 평년 =100으로 나누어 떨어지지않거나(100이랑 400이랑 충돌되기때문)
+400의 배수해는 윤년 =400으로 나누어 떨어지는 해
+
+>>식으로 
+
+2020%4==0 && 2020%100!=0 || 2020%400==0
+
+
+

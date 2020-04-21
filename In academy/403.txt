@@ -1,0 +1,173 @@
+403금요일
+====================
+[prompt]
+dos  >
+Linux/ Unix
+
+# ---> admin
+$ ---> general user
+
+multi user system
+
+ admin(권한이 다름)
+
+  그룹
+  508
+a b c d e(권한이 한정)
+
+*다른건 모두 볼 수 있지만,암호는 볼수가 없다
+cat^/etc/passwd
+일방암호알고리즘
+:한 방향으로만 암호화
+
+######unix########
+% --버클리판 (unix) C shell /bin/csh
+$ -> bourn shell (b shell) /bin/bsh
+  -> Korn shell (K shell) /bin/ksh : c와 B의 장점을 따서 만듦
+
+ 사용자 ------ shell--------시스템
+ 
+shell : 사용자와 시스템 사이 다리역할, 보통 명령을 받아 해석하는 역할 
+
+######Linux#######
+*bash : bourn again shell
+
+uname - a
+유닉스 : sunos 인지 hp인지 알려줌
+리눅스
+
+-------------
+[출력명령]
+unix /Linux
+echo "출력메시지"
+echo $SHELL
+
+python
+print """ 출력메시지 """
+
+GWBASIC
+10print"안녕"
+20print"나도"
+
+java
+system.out.print()
+--------------
+wall + (메세지 입력)
+ctrl + D (전송)
+ctrl + C (명령어 강제종료)
+clear(화면초기화)
+
+alias 조건식
+환경설정에서 설정하지않으면 끄면 없어진다
+
+sibling node : 형제노드
+부노드, 자노드
+리눅스 프로그램 == shell programming
+
+-------------
+
+/root 최상위 디렉토리 folder x
+/usr 서브디렉토리, 공유파일
+/bin 명령파일(유닉스,리눅스 명령)이있는 방
+/dev 입출력 장치파일이 있는 방
+/etc 관리파일이 있는 방
+/tmp 임시파일 디렉토리
+/lib 라이브러리
+/home/user 사용자방
+
+cat = display : 내용보는 명령
+cd = change directory
+mkdir : 디렉토리 만들기
+
+/는 root의 부모노드
+cd /etc
+
+pwd : 현재 위치 확인
+
+who : 현재 로그인 된 사람 확인
+w : log확인
+
+홈디렉토리로 이동하는 명령
+cd^ ,cd ~, cd $HOME 
+------------------
+ls : list(목록), 폴더 내용,파일확인
+ls -l  l은 long
+ls -a  a는 all(.으로 시작하는 hidden파일도 포함한 모든파일)
+ls -F  
+
+@ AT SIGN : 뒤에 @ 있으면 링크파일
+* :뒤에 * 있으면 실행파일
+리눅스에서 파일 = 디렉토리
+
+ls -aF 
+하늘색 디렉토리
+민트색 링크파일
+
+ls -ali  i는 i-node :비슷한 이름 사이에서 숫자로 구분
+ls -al
+-----------------
+##파일권한
+drwx:디렉토리
+-rwx:파일
+directory/read(읽기)/write(쓰기)/execute(접근) 권한
+
+drwxr-xr-x.
+drwx(내권한(U)) r-x(내가속한 GROUP 권한(G)) r-x(다른 사용자 그룹 OTHER(O))
+
+##권한 바꾸기
+(1) 8진모드(ocatal mode)
+
+4 2 1  4 2 1  4 2 1
+r w x  r w x  r w x
+
+r w x  r - x  r - x
+4+2+1  4+0+1  4+0+1
+  7      5      5  = 755권한모드
+
+touch babo.txt 크기가 없는 babo.txt의 빈파일 생성
+
+umask 파일권한 기본값을 결정
+1) 디렉토리 : 777
+2) 파일 : 666
+666-22 = 644
+644=rwxr--r--
+umask  : 기본 umask 값, 기본값은 0022
+umask 숫자 : 허가권 빼기
+
+chmod 허가숫자 파일,디렉토리명 허가숫자로 권한변경
+chmod 777 aa.txt 텍스트파일 777로 권한변경
+
+chmod g+w, o+w aabang 그룹에 w권한, other에 w권한 추가
+chmod g-w, o-w aabang 그룹에 w권한, other에 w권한 빼기
+--------------------------------
+link (바로가기와 유사)
+hard link symbolic link
+
+hard link 	: 같은파일 시스템, i-node를 공유, 원본삭제도 가능
+symbolic link : 다른파일 시스템, 원본삭제하면 안됨, 공유적 측면
+
+링크숫자 1이면 링크가 없다는 뜻
+
+에디터
+vi > vim (iMproved), gedit(윈도우의 메모장)
+
+
+cat concatenat : 화면출력(display)
+
+cat > pp.txt 	: pp파일 내에 입력
+cat pp.txt 	: pp파일 내용 확인
+cat >> pp.txt   : pp파일에 자료 추가
+rm pp.txt 	: pp파일 제거
+
+[hard link]
+ln pp.txt qq.txt : pp와 qq연결 (pp내용+qq)
+qq파일제거해도 pp내용은 그대로 유지됨 (hardlink)
+
+[symbolic link]
+/an1/an2
+ln -s an1/an2 kaja
+
+kaja -> an1/an2 (원본)
+7바이트
+
+권한 / 링크수 / 계정 계정 / 메모리할당 수/

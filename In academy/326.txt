@@ -1,0 +1,239 @@
+3/26 목요일
+----------------------
+ sqldeveloper로 ERD 추출하기
+
+메뉴에서 보기-data modeler- 브라우저
+
+좌측아래의 브라우저 창에서 맨앞+ 기호클릭한후 나타나는 관계형 모델[1] 우클릭 > 새관계형모델
+화면우측에 relational 탭창이 만들어진다
+
+7개의 hr테이블을 드래그하되 테이블앞의 그림을 드래그하여 (이때 드래그가 잘 안되면 오른쪽 마우스를 누른채로 드래그해본다) 우측 relational...탭창에 넣는다
+
+가단하게 보기위해 relational... 탭창에서 우클릭하여 세부정보보기에서 열만 남기고 체크표시를 다 지운다
+
+이미지나 pdf로 결과를 저장하기위해 relational... 탭창에서 우클릭한후 다이어그램인쇄에서 선택하여 저장한다
+--------------------
+[substring]
+
+자바
+String.substring(start) //문자열  start위치부터 끝까지 문자열 자르기
+String.substring(start,end) //문자열  start위치 부터 end전까지 문자열 발췌
+
+sql 
+substr(salary,start):start위치부터 끝까지 문자열 자르기
+substr(salary,start,2):문자열  start위치 부터 길이만큼 문자열 발췌
+
+-------------------------
+[반올림-round]
+round(x,n)
+실수x의 소수점 n번째 자리 까지 반올림 출력
+round(x,-n)
+실수x의 정수 n번째 자리 에서 반올림 출력
+
+select round(36.753,1) from dual;
+
+------------------------
+[버림-truncation]
+trunc(x,n)
+수 x 의 소수이하 n번째 까지 버림
+
+select trunc(736.754,1) from dual;
+736.75>>736.7
+
+trunc(x,-n)
+수 x 의 정수 n번째에서 버림
+
+select trunc(736.754,-1) from dual;
+736.754>>730
+
+------------------------
+날짜 구하기 함수
+[월 더하기]
+ADD_MONTHS(날짜, 숫자)
+현재날짜+n개월
+
+select sysdate,add_moths(sysdate,6)
+from dual;
+
+
+
+[근무 개월 수 구하기]
+
+months_between(최신날짜, 오래된 날짜)
+>> 최신날짜 - 오래된 날짜 = 근무 개월 수
+
+select first_name 이름, trunc(months_between(sysdate,hire_date)) 근무개월수 from employees;
+
+Q)
+오늘까지 근무한 년수는?
+
+select first_name 이름, trunc(months_between(sysdate,hire_date)/12)||'년' 근무년수
+from employees;
+
+Q)
+15년이상 근무한 직원의 이름,입사일,급여, 근무년차를 구하시오
+
+select first_name 이름,hire_date 입사일,salary 급여
+from employees
+where trunc(months_between(sysdate,hire_date)/12) >= 15;
+--------------------------
+[날짜 반올림]
+
+select round(sysdate,'mon') from dual;
+>>월 단위 반올림은 16일 부터 반올림이 가능
+
+select round(sysdate,'year')from dual;
+>>년 단위 반올림은 7월 부터 반올림이 가능
+
+-------------------------
+****[변환] db,java연관
+to_date()
+to_number()
+to_char()
+
+
+[문자 to 날짜]
+
+select to_date('2019 05 12','yyyy mm dd')from dual;
+
+'1998 02 13' 문자열은 
+'yyyy mm dd' 형식
+형식에 맞게 날짜로 변환함 ex) 98/02/13
+
+[날짜 to 문자]
+
+Q)
+오늘날짜를 4자리 년도로 표기하시오
+
+select to_char(sysdate,'yyyy/mm/dd') from dual;
+
+Q)
+
+사원의 이름과 매니저 아이디를 출력하시오
+
+select first_name 이름,nvl(to_char(manager_id),'매니저아이디없음') 매니저아이디
+from employees;
+
+>>타입이 안맞음, 타입을 변환하기 위해 매니저아이디(숫자타입)을 문자로 변환(to_char()함수)하면 된다. 타입이 똑같아야 nvl함수를 적용할 수 있다는 것을 기억하자
+
+select to_char(1234567,'$999,999,999') 
+from dual;
+>>1234567 은 숫자, 두번째 인자 틀에 맞게 문자로 바꿈
+9는 숫자랑 1대1 대응
+$는 유동형
+대입 : $1,234,567
+
+Q)
+2005년에 입사한 사원의 이름과 입사일 출력
+단,형변환 함수 사용
+
+select first_name 이름, hire_date as 입사일
+from employees
+where to_char(hire_date,'yy')='05';
+
+------------------------------
+[다중행함수]multi row function
+sum() max() min() count() >> 그룹함수
+
+[sum,max,min,avg]
+
+select sum(salary) from employees;
+
+select avg(salary) from employees;
+--받는사람의 평균임, 급여없는사람 평균에포함 x
+
+select min(salary) from employees;
+
+select max(salary) from employees
+
+select count(manager_id) from employees;
+>>null값은 자동으로 제외함
+
+select count(commission_pct) from employees;
+
+Q)
+급여의 합, 최소, 최대 급여출력, 급여평균, 직원 수 매니저있는 직원 수, 직원부서 수 구하기
+
+select sum(salary) as 급여총합,min(salary) as "최소급여", 
+max(salary) as 최대급여,avg(salary) as 급여평균 , 
+count(employee_id) as "직원 수", count(manager_id) as "매니저 있는 직원 수"
+, count( distinct department_id) as "직원 부서 수"
+
+>>중복배제인 distinct는 항상 칼럼명 바로앞에다 쓰자.
+-----------------------------
+[그룹]
+
+Q)부서별 급여의 평균을 구하시오(부서아이디,사원이름,부서별평균급여 출력)
+
+select department_id 부서아이디,agv(salary) 부서별 평균급여
+from employees
+group by department_id
+order by 1;
+
+**에러 판별법(group by)
+group by 함수인 칼럼을 제외한 칼럼이 그룹함수(다중행함수)가 아닐경우 에러 발생함.
+
+Q)
+연봉이 5천만 이하인 직원에 대하여
+부서별 최소급여를 구하시오.
+
+select /*department_id as 부서아이디,*/ min(salary) as 최소급여
+from employees
+where salary*12 <= 50000000
+group by department_id
+order by 1;
+
+Q)
+job_id의 첫 두글자가 'AD'가 아닌 직원에 대하여 부서별 최소급여를 구하시오.
+
+>select nvl(to_char(department_id),'부서없음') as 부서번호, min(salary) as 부서별최소급여
+from employees
+where substr(job_id,1,2)!='AD'
+group by department_id
+order by 2;
+
+>where job_id not like '%AD%'
+
+-------------
+[having 절]
+그룹화된 부분에서 추가조건이 있을때 사용함
+
+Q)
+
+부서아이디가 30이상인 직원에 대하여(주어진기본조건) 
+부서별 최소급여를 구하시오
+단, 부서별 평균급여가 10000이하인 경우만 구한다(추가조건)
+
+select department_id as 부서아이디, min(salary) as 부서별최소급여
+from employees
+where department_id >= 30
+group by department_id
+having avg(salary) <= 10000
+order by 1;---oo
+
+select department_id as 부서아이디, min(salary) as 부서별최소급여
+from employees
+where department_id >= 30 and avg(salary) <= 10000
+group by department_id
+order by 1;---xxx
+
+조건 1)일반조건 
+salary >20000 : where
+
+2)그룹조건:그룹함수
+:having  
+==============================
+
+**3/26배운것**
+erd추출하기
+(단일행함수)
+substring함수
+반올림(round), 버림(trunc)
+날짜구하기 함수-월 더하기(add_month),근무개월수 구하기(months_between)
+날짜 반올림
+형변환 함수-문자 to 날짜(to_date), 날짜 to 문자(to_char)
+(다중행함수)-그룹함수
+sum,max,min,avg,count
+group by함수
+having 절
+==============================

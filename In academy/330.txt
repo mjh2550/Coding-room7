@@ -1,0 +1,335 @@
+3/30 월요일
+
+================================
+john 3500달러 >> 2등급 3000~3799달러
+
+앞서배운 조인방법은 pk=fk로 조인했음
+
+salgrade는 범위값이지 정확한 값이 아니므로 조인이 불가능함
+
+>>NON EQUI JOIN
+--------------------------------
+[NON EQUI JOIN]
+
+직원의 급여가 몇등급인지를 조회하시오
+(단, 급여가 많은순부터, 같은급여면 등급이 높은순부터)
+
+
+select e.first_name 이름,e.salary 급여,s.grade 등급
+from employees e,salgrade s
+where e.salary between s.LOSAL and s.HISAL
+order by 2 desc,3 desc;
+
+------------------------------
+[subquery]
+
+join과 사촌관계
+
+sub query(조회)가 있어야 main query존재
+
+Q)
+daniel이 근무하는 부서의 평균급여를 구하시오
+(100번을 알때)
+
+select avg(e.salary) 평균급여
+from employees e
+where department_id = 100;
+
+100번 모를때
+(1)daniel이 몇번부서인지 구함 >> subquery
+
+select e.department_id 부서번호
+from employees e
+where lower(e.first_name) = 'daniel';
+
+소문자 lower 대문자 upper함수 사용
+
+(2)구한코드를 삽입함
+
+select avg(e.salary) 평균급여
+from employees e
+where e.department_id =(select e.department_id 부서번호
+from employees e
+where lower(e.first_name) = 'daniel');
+
+--------------------------
+Q1)
+nancy가 속한 부서의 최소급여를 구하시오
+
+Q2)
+급여를 8200을 받는 직원의 부서아이디를 찾아 부서아이디와 해당 부서명을 출력하시오
+
+Q3)
+'IT'부서에서 근무하는 직원들의 이름, 급여, 입사일, 부서명을 조회하시오
+
+
+----------------------------
+
+
+
+
+
+
+Q1)
+nancy가 속한 부서의 최소급여를 구하시오
+
+select min(e.salary) 최소급여
+from employees e
+where e.department_id = 
+    (select e.department_id 부서번호
+    from employees e
+    where lower(e.first_name)='nancy');
+
+Q2)
+급여를 8200을 받는 직원의 부서아이디를 찾아 부서아이디와 해당 부서명을 출력하시오
+
+서브쿼리
+select e.department_id 부서번호
+from employees e
+where e.salary = 8200;
+
+메인쿼리
+select d.department_id 부서번호, d.department_name 부서명
+from departments d
+where d.department_id 
+[=]x >> [in]o
+(select e.department_id 부서번호
+from employees e
+where e.salary = 8200);
+>> 서브쿼리 값이 2개이므로 연산자 =은 사용할 수 없음 그러므로 in 사용
+
+select d.department_id 부서번호, d.department_name 부서명
+from departments d
+where d.department_id 
+in(select e.department_id 부서번호
+from employees e
+where e.salary = 8200);
+
+
+Q3)
+'IT'부서에서 근무하는 직원들의 이름, 급여, 입사일, 부서명을 조회하시오
+
+서브,메인쿼리
+select e.first_name 이름, e.salary 급여, hire_date 입사일
+from employees e
+where e.department_id = (select d.department_id 부서번호
+from departments d
+where department_name = 'IT');
+
+조인
+
+select e.first_name 이름, e.salary 급여, e.hire_date 입사일, d.department_id 부서번호, d.department_name 부서명
+from employees e,departments d
+where e.department_id = d.department_id
+and department_name = 'IT';
+
+-------------------------------
+
+Q)각 부서별로 최저급여를 받는 직원의 이름과 부서아이디, 급여를 조회하시오
+(단,출력은 부서아이디 오름차순)
+
+
+
+서브쿼리
+select min(e.salary)
+from employees e
+group by department_id;
+
+메인쿼리
+select e.first_name 이름, e.department_id 부서아이디 ,e.salary 급여
+from employees e
+where e.salary in(select min(e.salary)
+from employees e
+group by department_id)
+order by 2;
+
+>>group by는 셀렉트에 없어도 가능!!!
+>>pair wise :답이 정확한 값이 아닌 섞여서 나올때
+
+해결 : 짝을 맞춰주면 해결가능
+
+select e.first_name 이름, e.department_id 부서아이디 ,e.salary 급여
+from employees e
+where (e.department_id, salary) 
+in (select e.department_id, min(e.salary)
+from employees e
+group by e.department_id)
+order by 2;
+
+
+
+Q) 
+각 부서별 최대급여를 받는 /
+직원의 이름, 부서명, 급여를 조회하시오
+(+서브,조인)
+
+
+
+select e.first_name 이름, d.department_name 부서명, e.salary 급여
+from employees e,departments d
+where e.department_id = d.department_id
+and (e.department_id,e.salary) in (select e.department_id , max(e.salary) 부서별최대급여
+from employees e
+group by e.department_id);
+
+
+Q)
+'Seattle'에 근무하는 직원의 
+최대급여보다 급여를 적게 받으면서
+80번 부서의 평균급여보다 많은 급여를 받는 직원의 
+이름 급여 부서아이디 부서명을 출력하시오
+
+
+
+select e.first_name 이름,e.salary 급여, e.department_id 부서아이디, d.department_name 부서명
+from employees e,departments d,locations l
+where e.department_id = d.department_id
+and d.location_id = l.location_id
+
+and e.salary < (select max(e.salary)
+                from employees e,departments d,locations l
+                where e.department_id = d.department_id
+                and d.location_id = l.location_id
+                and lower(l.city) = 'seattle')
+
+--24000> 기준 급여 >8955.8
+
+and e.salary > (select avg(e.salary)
+                from employees e
+                where e.department_id =80)
+order by e.salary
+
+---------------------------------
+[rownum: 상위n줄 추출]
+
+
+Q)
+급여를 가장 많이 받는 상위 7명의 
+직원 정보를 조회하시오
+단, from subquery, rownum 사용
+
+
+select first_name 이름,salary 급여
+from 
+(
+select first_name, salary
+from employees
+order by salary desc
+)
+where rownum <= 7;
+
+
+
+
+Q)
+커미션을 가장 많이 받는 상위 5명의 
+직원정보를 조회하시오.
+
+select first_name 이름, commission_pct 커미션
+from
+(
+select first_name, commission_pct 
+from employees
+order by commission_pct desc nulls last
+)
+where rownum <= 5;
+
+>> nulls last : null값을 뒤로
+
+or 
+where commission_pct is not null
+
+---------------------------------
+ddl data definition language
+create alter drop
+
+dml data manipulation language
+insert update delete
+
+--------------------------------
+[테이블만들기]
+-----
+1.툴 명령
+
+create table 테이블명(
+ 칼럼명 자료형,
+ 칼럼명 자료형,
+ 칼럼명 자료형
+ );
+
+
+create table bisang (
+sabun number(5)
+irum char(20)
+tel varchar2(20)
+nalja date
+);
+
+*trim : 빈칸제거
+-----
+2.테이블삭제
+
+drop table bisang;
+
+*전체테이블 검색 : select * from tabs;
+------
+3.자료 삽입
+insert into 테이블명
+values (.. , ... , ..)
+
+insert into bisang
+values (10,'김동민','010-4001-7881','18/11/30');
+
+insert into bisang
+values (11,'박자바','010-7777-7881','19/12/30');
+
+insert into bisang
+values (21,'이미정','010-2768-2354','16/09/27');
+
+
+--정보 모를 때는 null 입력
+insert into bisang
+values (22,'이우영',null,'16/09/27');
+
+insert into bisang
+values (null,'김민정',null,'16/09/27');
+
+-----------------------
+양이 많을 때1
+insert into 테이블명(칼럼명,칼럼명)
+values (칼럼값,칼럼값);
+50,이도영
+
+양이 많을 때2
+컨트롤박스 생성,값입력
+에러시 멈춤
+insert into bisang
+values (&sabun,'&irum','&tel','&nalja');
+
+*& : AND 연산자 
+| : OR 연산자
+----------------------
+create table bisang2 (
+sabun number(5) default 00001,
+irum char(20) default '홍길동',
+tel varchar2(20) default '010-0000-0000',
+nalja date default sysdate
+);
+
+insert into bisang2
+values (&sabun,'&irum','&tel','&nalja');
+
+insert into bisang2
+values (default,default,'010-2768-2354',default);
+
+insert into bisang2(sabun,irum)
+values (default,default);
+
+desc bisang2;
+select * from bisang2;
+
+비상2 테이블에서 이름과 날짜를 출력하시오
+년도는 4자리로 출력
+
+select irum 이름, to_char(nalja, 'yyyy/mm/dd') 날짜
+from bisang2;

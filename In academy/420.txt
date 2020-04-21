@@ -1,0 +1,355 @@
+420월요일
+=====================
+class BBang {//1.설계(정의)
+			
+			private String jong;//속성 //외부에서 접근못하게
+			private int 	ka;//속성
+			public void meokja() {//메소드 정의
+				System.out.println("빵을 맛있게 먹자");
+				/*//접근지정자 access modifier :외부 접근 4종류
+				 * private : 같은 클래스에서만 접근가능
+				 * public : 외부 클래스에서도 접근가능
+				 * (default)아무것도 안씀 : 같은 패키지 접근가능 
+				 * protected : 상속에서만*/
+
+				
+		public void setJong(String jong) {//캡슐화를 위한 도우미
+			this.jong=jong;//setter
+		}
+		public void setKa(int ka) {
+			this.ka=ka;
+		}
+			
+			}
+			public int getKa() {
+				return ka;
+			}
+			public void setKa(int ka) {
+				this.ka = ka;
+			}
+}
+//////////////
+-private 된 속성을 변경수정할때 getter와 setter
+-getter는 값을 출력할때, setter는 값을 설정할때 사용
+///메인에서는/// 
+-객체생성(myCar c1=new myCar();)
+-값설정(c1.setDoor)
+-값출력(sout(c1.gerDoor))
+-메소드호출(c1.run();)
+
+///클래스에서는///
+-속성(접근자:public,private...)
+-getter,setter
+
+
+///출력 전문메소드 하나만들자
+-클래스에 메소드를 만들고
+객체.메소드 로 클래스 안에 메소드 호출할 수 있다.
+
+//자주쓰는 출력메소드 사용법
+******overload vs override*******
+메소드 중복
+함수  중복     재정의-상속
+
+오버로딩(Overloading) : 같은 이름의 메소드를 여러 개 가지면서 매개변수의 유형과 개수가 다르도록 하는 기술
+
+오버라이딩(Overriding) : 상위 클래스가 가지고 있는 메소드를 하위 클래스가 재정의 해서 사용한다.
+******************
+
+문자열 ~~
+객체의 조상 Object - 속성, 메소드(toString())
+
+// 자주쓰는 출력메소드 사용법 -오버라이딩(재정의)
+public String toString() {
+return "빵종류는"+jong+"이고 가격은"+ka+"원 이라는~";}
+
+//오버라이딩 출력- tostring 사용
+System.out.println(b1.toString());
+System.out.println(b1);//객체이름만 쓰고 메소드는 생략가능함
+		
+//오버라이딩 할때는 보통 toString() 사용하므로 알아두자
+-----------------------
+
+메인에
+String pummok="coffee:big"1500:jongro";이 있을때 cafe1 클래스를 사용하여 getter/setter 및 to String()등을 작성한 후 toString() 출력시
+
+coffee 의 사이즈가 big 인경우 가격은 1500원이며 jongro지점에서 판매합니다.
+
+**split**
+기억창고를 만들고 문자열을 자른다.
+.을 구분자로사용할때는 "\\." 이렇게 사용
+**말도안되는 구분자에는 \\를 붙이면 된다.
+
+----------------------
+[객체의 lifecycle]
+main()
+new :객체생성
+default 생성자 가동 : 초기치
+ >>>new BBang()// jong"" ka0
+객체생성시  기본값으로 문자열에는 빈 문자열이 들어가고, 숫자에는 0이 들어감
+
+***객체생성과 동시에 초기치 설정을 하려면***
+BBang b1=new BBang("치즈빵",1000)
+
+생성자 작성---
+생성자는 항상 클래스이름!!
+public BBang(클래스이름) (String Jong, int Ka){
+ this.jong=Jong;
+ this.Ka=Ka;
+(setter와 똑같이 써준다)
+}//메소드 정의문 2형식 개념과 비슷함
+return x, void x
+
+초기치설정을 했다면---
+디폴트 생성자 무조건 있어야함
+public BBang(){} <<빼먹지 말것
+*******************
+
+다양한 로직
+소멸자 가동 (destructor):객체 정리
+main-end  >> 객체소멸 garbage collector(dispode()):개발자가 직접 소멸
+
+c언어 : malloc() calloc() --->free
+c++
+#객체 안지우면 
+1)memory leak :메모리부족
+잘못 지우는 경우
+2)dangling pointer problem 발생
+****************
+    
+main () 있는 Bakery.java , main없는 BBang.java를 생성하여 빵종류와 가격을 처리하는 프로그램을 작성하시오.
+단, 생성자, toString()을 사용하되 모두 generating으로 처리하시오
+
+@Override//annotation
+	public String toString() {
+		return "BBang [Jong=" + Jong + ", Ka=" + Ka + "]";
+
+-------------------
+
+
+Q) 클래스 속성으로 고객명, 핸폰기종명, 핸폰가격, 구입처를 만든후 해당클래스를 사용하여 5개정도 객채를 만든다음(생성자, getter,setter도 만듬)
+toString ()을 사용하여 다음과같이 출력하는 프로그램만드시오
+
+홍길동 고객님의 핸폰에 대한 정보는 다음과 같습니다.
+
+고객님의 아이폰 xs의 가격은 150만원이고 구입처는 종로지점에서 구입하셨네요ㅗ
+
+이도령 고객님의 핸폰에 대한 정보는 다음과 같습니다
+고객님의 갤럭시s8의 가격은 90만원이고 구입처는 강남지점에서 구입하셨네요
+
+객체임력 예는 당므과같다
+
+홍길동 아이폰 ㅌs 1500000 종로지점
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------===================
+		//총 4단계(레어-에픽-유니크-레전더리)
+				//10가지옵션중 3개가 균등하게 출력, 중복가능
+				//등급업 확률 
+				//레어-에픽(20%)
+				//에픽-유니크(10%)
+				//유니크-레전더리(5%)
+				
+				//주사위 굴려서 랜덤숫자 3개출력하는데, 그 숫자를 문자로 연동?-숫자로 문자출력시킬 방법 연구
+				//첫줄은 상위등급, 2,3번째는 동일등급 출력
+				//시도횟수는 무한
+		Acube ac = new Acube();
+
+		Scanner sc1 = new Scanner(System.in);
+		ac.num = 1;
+		ac.swc = 0;
+		while (ac.swc != 1) {// 레어등급
+
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("현재등급 : 레어");
+			System.out.println("주사위 굴리기 :press any key");
+			ac.dice = sc1.next();
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			if (aa >= 12) {
+				System.out.println("***에픽 등급 업!!***");
+				ac.num++;
+				System.out.println("현재등급 : 에픽");
+				System.out.println("**********");
+				System.out.println("**" + ac.St_u[(int) aa] + "**");
+
+				double bb = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) bb] + "**");
+
+				double cc = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) cc] + "**");
+				System.out.println("**********");
+				break;
+			}
+			
+			System.out.println("현재등급 : 레어");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_r[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 13);
+			System.out.println("**" + ac.St_n[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 13);
+			System.out.println("**" + ac.St_n[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+
+		}
+		while (ac.swc != 2) {// 에픽 등급
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("주사위 굴리기 :press any key");
+			ac.dice = sc1.next();
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			if (aa >= 18) {
+				System.out.println("***유니크 등급 업!!***");
+				;
+				ac.swc++;
+				System.out.println("현재등급 : 유니크");
+				System.out.println("**********");
+				System.out.println("**" + ac.St_u[(int) aa] + "**");
+
+				double bb = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) bb] + "**");
+
+				double cc = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_e[(int) cc] + "**");
+				System.out.println("**********");
+				ac.num++;
+				break;
+			}
+
+			System.out.println("현재등급 : 에픽");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_e[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 18);
+			System.out.println("**" + ac.St_r[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 18);
+			System.out.println("**" + ac.St_r[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+		}
+
+		while (ac.swc != 3) {// 유니크 등급
+
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("주사위 굴리기 :press any key");
+			ac.dice = sc1.next();
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			if (aa >= 19) {
+				System.out.println("***등급 업!!***");
+				;
+				ac.swc++;
+				System.out.println("현재등급 : 레전더리");
+				System.out.println("**********");
+				System.out.println("**" + ac.St_l[(int) aa] + "**");
+
+				double bb = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_u[(int) bb] + "**");
+
+				double cc = (int) Math.ceil(Math.random() * 20);
+				System.out.println("**" + ac.St_u[(int) cc] + "**");
+				System.out.println("**********");
+				ac.num++;
+				break;
+			}
+			
+			System.out.println("현재등급 : 유니크");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_u[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_e[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_e[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+		}
+
+		while (ac.swc != 4) {// 레전더리 등급
+			
+			
+			System.out.println(ac.num + "번째 시도");
+			System.out.println("주사위 굴리기 :press any key");
+			System.out.println("멈추려면 'gg'를 입력하세요");
+			ac.dice = sc1.next();
+			
+			if (ac.dice.equals("gg")) {
+				System.out.println("큐브를 종료합니다");
+				break;
+			}
+
+			double aa = (int) Math.ceil(Math.random() * 20);
+			
+			System.out.println("현재등급 : 레전더리");
+			System.out.println("**********");
+			System.out.println("**" + ac.St_l[(int) aa] + "**");
+
+			double bb = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_u[(int) bb] + "**");
+
+			double cc = (int) Math.ceil(Math.random() * 20);
+			System.out.println("**" + ac.St_u[(int) cc] + "**");
+			System.out.println("**********");
+			ac.num++;
+		}
+	}
+}
+
+class Acube {
+	int swc;
+	int num;
+	String dice;
+	String[] St_n = { "공격력+3%", "마력+3%", "STR+10", "DEX+10", "INT+10",
+			"LUK+10","STR+10", "DEX+10", "INT+10",
+			"LUK+10", "STR+10", "DEX+10", "INT+10",
+			"LUK+10" };//노말 - 14개옵션
+	String[] St_r = { "공격력+3%", "마력+3%", "STR+3%", "DEX+3%", "INT+3%", "LUK+3%", "STR+10", "DEX+10", "INT+10",
+			"LUK+10", "STR+3%", "DEX+3%", "INT+3%", "LUK+3%", "STR+10", "DEX+10", "INT+10",
+			"LUK+10","크리티컬 확률 10%","크리티컬 확률10%" };//레어 -19개옵션
+	String[] St_e = { "공격력+6%", "마력+6%", "STR+6%", "DEX+6%", "INT+6%", "LUK+6%", "STR+3%", "DEX+3%", "INT+3%",
+			"LUK+3%","STR+6%", "DEX+6%", "INT+6%", "LUK+6%", "STR+3%", "DEX+3%", "INT+3%",
+			"LUK+3%","크리티컬 확률 20%","크리티컬 확률20%","몬스터 방어율 무시 15%","몬스터 방어율 무시 15%" };//에픽-21개옵션
+	String[] St_u = { "공격력+9%", "마력+9%", "STR+9%", "DEX+9%", "INT+9%", "LUK+9%", "STR+9%", "DEX+9%", "INT+9%",
+			"LUK+9%","STR+9%", "DEX+9%", "INT+9%", "LUK+9%", "STR+9%", "DEX+9%", "INT+9%",
+			"LUK+9%","크리티컬 확률 30%","크리티컬 확률30%","몬스터 방어율 무시 35%","몬스터 방어율 무시 35%" };//유니크-21개옵션
+	String[] St_l = { "공격력+12%", "마력+12%", "STR+12%", "DEX+12%", "INT+12%", "LUK+12%", "STR+12%", "DEX+12%", "INT+12%",
+			"LUK+12%","STR+12%", "DEX+12%", "INT+12%", "LUK+12%", "STR+12%", "DEX+12%", "INT+12%",
+			"LUK+12%","크리티컬 확률 40%","크리티컬 확률40%","몬스터 방어율 무시 40%","몬스터 방어율 무시 40%" };//레전더리-21개옵션
+
+}

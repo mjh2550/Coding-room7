@@ -1,0 +1,241 @@
+331 화
+
+==========================
+[update]
+update 테이블명
+set 칼럼명=수정내용 >> 전부다변경
+
+update 테이블명
+set 칼럼명=수정내용,칼럼명=수정내용;
+>> 여러개 칼럼 한꺼번에 수정
+
+update 테이블명
+set 칼럼명=수정내용,칼럼명=수정내용
+where 조건;
+
+
+Q) 이미정의 사원번호를 55로변경하고 전화번호도 변경하시오
+
+
+update bisang
+set sabun=55,tel='010-3333-8888'
+where irum='이미정';
+
+Q)
+직책(job_title)이 'manager'로 끝나는 직원은 10% 급여 인상하고
+나머지는 50%을 인상하려한다
+이름 직책 급여 인상된급여를 출력하시오
+
+select e.first_name 이름, e.salary 급여,j.job_title 직책,
+decode(substr(job_title,-7), 'Manager' , salary*1.1 ,salary*1.5) 인상된급여
+from employees e,jobs j
+where j.job_id = e.job_id;
+
+--------------------------
+*[decode] case-when(if문과 비슷)
+decode(조건,값,yes,no)
+decode(조건,값,yes,(조건....)))
+*연산자는 쓰지않고 값만 입력함
+
+--------------------------
+[delete]
+delete from 테이블명
+where 조건
+
+**특징
+- 데이터만 삭제 되며 테이블 용량은 줄어 들지 않는다. 또한 삭제후 잘못 삭제한 것을 되돌릴 수 있다.
+
+- TABLE이나 CLUSTER에 행이 많으면 행이 삭제될 때마다 많은 SYSTEM 자원이 소모 된다.
+- Commit이전에는 Rollback이 가능하다.
+- 롤백정보를 기록 하므로 Truncate에 비해서 느리다.
+- 전체 또는 일부만 삭제 가능 하다.
+- 삭제 행수를 반환 한다.
+- 데이터를 모두 Delete해도 사용했던 Storage는 Release 처리 되지 않는다.
+
+
+[truncate]
+truncate table 테이블명;
+
+
+**특징
+
+- 테이블을 최초 생성된 초기상태로 만든다.
+- 용량이 줄어들고, 인덱스 등도 모두 삭제 된다.
+- Rollback 불가능 하다.
+- 무조건 전체 삭제만 가능 하다.
+- 삭제 행수를 반환 하지 않는다.
+- 테이블이 사용했던 Storage중 최초 테이블 생성시 할당된 Storage만 남기고 Release 처리 된다.
+
+[drop]
+drop table 테이블명;
+
+**특징
+기존 테이블의 존재를 제한다. (테이블의 정의 자체를 완전히 삭제한다)
+Rollback 불가능 하다.
+테이블이 사용했던 Storage는 모두 Release 처리 된다
+
+테이블살리기
+flashback table bisang2 to before drop;
+
+
+
+
+q)
+스키마를 만들고 테이블 만드시오
+
+만화카페 대여장부 - 일련번호, 회원번호 ,반납일, 대여료
+
+만화카페 회원장부 - 회원번호, 회원이름 ,회원전화번호, 좋아하는 장르
+
+
+만화카페 만화장부 - 만화번호, 만화이름, 구입일, 구입가격
+
+
+
+만화카페 대여장부 - 일련번호, 회원번호 ,반납일, 대여료
+
+
+
+---------------------------
+[constraints] -무결성 제약조건 :결함을 없앤다
+총 5개
+
+제약조건 방식 2가지
+1)column level 방식 : 칼럼명에 이어서(중간중간에)
+2)table level 방식 : 제약조건을 뒷부분에 모아서
+
+not null : coulmn level 방식만 가능
+
+제약조건 간 사용법
+constraint
+ 제약조건이름(테이블명_칼럼명_제약조건약어) | 제약조건종류
+
+이름을 달아주는게 좋다.(찾기쉬움)
+
+
+ 1) 칼럼레벨방식 : 데이터타입을 만들고 컴마를 쓰지 않고 붙여서 제약조건을 작성한다.
+
+ex)
+create table memtable(
+ memname varchar2(20)
+constraint memtable_memname_pk primary key,
+>> primary key(pk) : 널값x, 중복x,한개만 지정가능
+
+ memtel varchar2(20)
+constraint memtable_memtel_uk unique,
+>> unique(uk) : 널값o(열당1개), 중복x,여러개 지정가능
+
+ memhobby varchar2(30)
+constraint memtable_memhobby_nn not null,
+>> not null(nn) : 널값x
+
+ membi number(5)
+constraint memtable_mambi_ck check(membi>1000),
+>> check(ck) : 범위,조건 지정
+
+ memid number(6)
+constraint memtable_memid_fk references memidtable(memid)
+reference(fk) : 참조
+>> 칼럼방식
+
+constraint memtable_memid_fk 
+foreign key(memid) 
+references memidtable(memid)
+>>테이블레벨방식
+);
+
+Q)
+
+--스키마를 만들고 테이블 만드시오
+ --만화카페 대여장부 - 일련번호, 회원번호 ,반납일, 대여료
+create table cafe1(
+ i_number varchar2(20)
+ constraint cafe1_i_number_pk primary key,
+ cu_number number(4)
+ constraint cafe1_cu_number_fk references cafe2(cu_number),
+ re_day date default sysdate,
+ lent_money number(10),
+ bk_number number(4),
+ constraint cafe1_bk_number_fk foreign key(bk_number) references cafe3(bk_number)
+ );
+ 
+ --만화카페 회원장부 - 회원번호, 회원이름 ,회원전화번호, 좋아하는 장르
+ create table cafe2(
+ cu_number number(4)
+ constraint cafe2_cu_number_pk primary key,
+ cu_name char(10)
+ constraint cafe2_cu_name_uk unique,
+ TEL varchar2(20)
+ constraint cafe2_TEL_uk unique,
+ cu_like char(5)
+ constraint cafe2_cu_like_nn not null);
+ 
+ --만화카페 만화장부 - 만화번호, 만화이름, 구입일, 구입가격
+  create table cafe3(
+ bk_number number(4)
+ constraint cafe3_bk_number_pk primary key,
+ bk_name char(10),
+ buy_date date default sysdate,
+ buy_money number(10)
+ );
+-------------------------------
+ 2)테이블 레벨 방식(nn빼고 콤마찍기)
+
+ --만화카페 대여장부 - 일련번호, 회원번호 ,반납일, 대여료,만화번호
+
+create table cafe1(
+ i_number varchar2(20),
+ cu_number number(4),
+ re_day date default sysdate,
+ lent_money number(10),
+ bk_number number(4),
+ 
+ constraint cafe1_i_number_pk primary key(i_number),
+ constraint cafe1_cu_number_fk foreign key(cu_number) references cafe2(cu_number),
+ constraint cafe1_bk_number_fk foreign key(bk_number) references cafe3(bk_number)
+);
+ 
+ --만화카페 회원장부 - 회원번호, 회원이름 ,회원전화번호, 좋아하는 장르
+ create table cafe2(
+ cu_number number(4),
+ cu_name char(10),
+ TEL varchar2(20),
+ cu_like char(5)
+ constraint cafe2_cu_like_nn not null,
+ constraint cafe2_cu_number_pk primary key(cu_number),
+ constraint cafe2_cu_name_uk unique(cu_name),
+ constraint cafe2_TEL_uk unique(TEL)
+);
+ 
+ 
+ --만화카페 만화장부 - 만화번호, 만화이름, 구입일, 구입가격
+  create table cafe3(
+ bk_number number(4),
+ bk_name char(10),
+ buy_date date default sysdate,
+ buy_money number(10),
+ constraint cafe3_bk_number_pk primary key(bk_number)
+);
+
+
+insert into cafe2
+ values (&cu_number,&cu_name,&TEL,&cu_like);
+ 
+
+ select * from cafe2;
+ 
+insert into cafe1
+ values (&i_number,&cu_number,&re_day ,&lent_money,&bk_number);
+ 
+insert into cafe3
+ values (&bk_number,&bk_name,&buy_date,&buy_money);
+ 
+ insert into cafe2
+ values (0101,'김범수','010-1111-2222','액션');
+  insert into cafe2
+ values (0102,'김밥','010-2233-2222','스릴러');
+ 
+ desc cafe3;
+ insert into cafe1
+ values ('A001',0101,'20/03/02',5000,0307);
+ 

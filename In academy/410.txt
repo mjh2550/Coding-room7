@@ -1,0 +1,194 @@
+410금요일
+===================
+자바-jdbc
+프론트엔드)html-css-javascript-jquery-ajax
+was-jsp-spring
+---------------
+
+(1)메소드 1형식
+
+choki();
+maincheori();
+mamoori();
+
+1.수정,추가 쉽게하려고
+2.똑같은거 반복 하려고-반복할때 메소드 쓰면 효율적이다
+
+메소드 호출문/메소드 정의문 
+    사장      비서
+
+
+	kaja();
+	
+	
+	public static void kaja(){
+	시킨일
+       }
+>> 메인에서는 호출만 하고 다른 메소드에서는 입력, 로직을 만들고 출력한다.
+예)윤년 로직
+
+	public static void main(String[] args) {
+	
+		
+		kaja();//메소드 호출문
+		System.out.println("5분후에 다시 호출할일이 생기면~~");
+		kaja();//메소드 1형식
+	}
+//////////////////////////////////////////////메인 끝
+	private static void kaja() {//메소드정의문
+		Scanner sc1=new Scanner(System.in);
+		System.out.println("연도입력");
+		int aa=Integer.parseInt(sc1.next());
+		if(aa%4==0 && aa%100!=0 && aa%300==0)
+		{
+			
+			System.out.println(aa+"년은 윤년");
+		}
+		else
+		{
+			System.out.println(aa+"년은 평년");
+		}
+
+
+--------
+2형식
+메인에서는 값을 입력,호출하고, 다른 메소드에서는 로직을 만들고 값을 출력한다.
+
+예) bmi 로직
+
+import java.util.Scanner;
+
+public class EXEXE222 {
+
+	public static void main(String[] args) {
+		Scanner sc1=new Scanner(System.in);
+		System.out.println("키입력");
+		int tall=Integer.parseInt(sc1.next());
+		System.out.println("몸무게입력");
+		int b=Integer.parseInt(sc1.next());//메인에서는 입력만 받는다. 키,몸무게
+	kaja(tall,b);
+	kaja(tall,b);//반복출력
+	
+	}
+
+	private static void kaja(double aa,double bb) {
+
+		
+		double mki=aa*0.01;//메인에서 받은 데이터를 로직돌린다
+		double bmi=bb/Math.pow(mki, 2);
+
+		
+		
+		if(bmi > 30)
+		{
+			System.out.println("bmi:"+bmi+"\n"+"비만");
+		}
+		else if(bmi<=30 && bmi>25)
+		{
+			System.out.println("bmi:"+bmi+"\n"+"과체중");
+		}
+		else if(bmi<=25 && bmi>20)
+		{
+			System.out.println("bmi:"+bmi+"\n"+"보통");
+		}
+		else 
+		{
+			System.out.println("bmi:"+bmi+"\n"+"저체중");
+		}
+	}
+-------------
+3형식
+-서브메소드가 메인메소드에게 결과값을 가져가야함(return)
+-return값은 원칙상 1개여야함-배열을 사용하여 여러가지 가져갈 수 있다.
+-1,2형식은 메인메소드 호출문 다음으로 되돌아온다
+-3형식은 리턴값이 호출문을 지우고 그 자리에 들어감
+-그렇기에 호출문에 변수선언과 출력명령을 입력 해줘야 한다.
+
+예) BMI 로직 3형식
+	package CCCCCCCC;
+
+import java.util.Scanner;
+
+public class M21 {
+
+	public static void main(String[] args) {
+		Scanner sc1=new Scanner(System.in);
+		
+
+		System.out.println("키입력");
+		int tall=Integer.parseInt(sc1.next());
+		System.out.println("몸무게입력");
+		int b=Integer.parseInt(sc1.next());//메인에서는 입력만 받는다. 키,몸무게
+	String CC = kaja(tall,b);
+	System.out.println("결과는= "+ CC);//3형식은 덮어써지기 때문에 출력명령을 따로 줘야 한다.
+	
+	}
+
+	private static String kaja(double aa,double bb) {
+
+		
+		double mki=aa*0.01;//메인에서 받은 데이터를 로직돌린다
+		double bmi=bb/Math.pow(mki, 2);
+
+		if(bmi > 30)
+		{
+			return "비만";
+			//System.out.println("bmi:"+bmi+"\n"+"비만");
+		}
+		else if(bmi<=30 && bmi>25)
+		{
+			return "과체중";
+			//System.out.println("bmi:"+bmi+"\n"+"과체중");
+		}
+		else if(bmi<=25 && bmi>20)
+		{
+			return "보통";
+			//System.out.println("bmi:"+bmi+"\n"+"보통");
+		}
+		else 
+		{
+			return "저체중";
+			//System.out.println("bmi:"+bmi+"\n"+"저체중");
+		}
+	}
+
+}
+----------------------
+//1)overloading(중복)
+
+//2)overriding(재정의)
+
+method overloading(메소드 중복)
+목적 : 가독성을 높이기 위해 메소드이름을 같게함
+
+kyesan();
+kyesan2(10,20);
+int don=kyesan3(10,20,30);
+>>>>>>>>>
+kyesan();
+kyesan(10,20);
+int don=kyesan(10,20,30);
+
+-----------
+오버로딩의 조건
+1.메소드 이름은 같아야 한다
+2.인자의 자료형이 다르거나 갯수가 달라야된다.
+-------
+static메소드**********
+
+------------
+배열
+기억창고를 한꺼번에 잡는 것
+		//int jum[]=new int[3];
+		/*int [] jumg = new int[3];이렇게 써도된다*/
+		
+		int [] jum;
+		jum=new int[3];
+		
+		jum[0]=100;//배열은 0부터시작 명심
+		jum[1]=75;
+		jum[2]=90;
+		//jum[3]=100;
+		System.out.println(jum[0]+","+jum[1]+","+jum[2]);
+		
+
