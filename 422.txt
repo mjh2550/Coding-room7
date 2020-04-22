@@ -1,0 +1,255 @@
+4/22수요일
+===================
+추상화(abstraction)
+-가독성, 다형성(polymorphism)을 위해서 사용
+-인터페이스나 추상화 모두 상속이있어야 함
+
+-----
+import java.util.Scanner;
+
+//추상화
+
+
+abstract class Kwail{//일반클래스 ->추상클래스
+	public void good()
+	{
+		System.out.println("먹으면 좋아");
+	}
+	public abstract void mukja();//추상메소드
+	//구현x,선언o,구현은 자녀쪽에서 한다 //인터페이스랑 비슷
+	//interface 와 abstract 는 사촌간
+	//인터페이스보단 조금 더 상세한 설계도
+}
+
+class Sakwa extends Kwail {
+
+	@Override
+	public void mukja() {
+		System.out.println("사과를 사각사각 먹자");
+		
+	}
+	
+}
+class Bae extends Kwail{
+	public void mukja() {//메소드 하나가 다양한 기능을 가짐
+		System.out.println("배를 먹자");
+	}
+}
+class Kam extends Kwail{
+	public void mukja() {
+		System.out.println("떫은 감");
+	}
+}
+
+//1이면 사과 2이면 배,3이면 감을먹는 프로그램작성
+public class BBB {
+
+	public static void main(String[] args) {
+		Scanner sc1=new Scanner(System.in);
+		System.out.println("무슨 과일먹을래 1-사과,2-배,3-감");
+		int aa=sc1.nextInt();
+		if(aa==1)
+		{
+			Kwail k1=new Sakwa();
+			k1.mukja();
+		}
+		else if(aa==2) {
+			Kwail k2=new Bae();
+			k2.mukja();
+		}
+		else if(aa==3) {
+			Kwail k3=new Kam();
+			k3.mukja();
+		}
+		
+	}
+
+}
+
+----------------------
+EXception (예외/에러)
+1.try,catch,finally
+java.lang.Arithmetic exception /by zero
+콘솔화면 제일 첫번째 에러를 자세히 읽어보고, 먼저 해결한다(보통 주원인, 주로 syntax error)
+
+Java 는 -JVM(JAVA virtual machine) -에러 담당,속도저하 원인
+c#은 CLR(Common Language Runtime)
+
+
+예외 : EXception (내장 클래스, 예외클래스중의 조상)
+try {} : 예외날지도 몰라(본문)
+catch(Exception 객체){행동} : 예외 시 처리할 행동
+finally {} : 무조건 처리
+
+에러-----
+C언어 :error번호 4069
+자바 :message방 에 에러 들어감(/by zero) >>getMssage()가 에러명을 출력해줌
+
+--------
+에러처리 출력예제
+
+import java.util.Scanner;
+
+public class EXCEPTION {
+
+	public static void main(String[] args) {
+		
+		try {//본문
+		Scanner sc1=new Scanner(System.in);
+		
+		System.out.println("첫번째 수는 :");
+		String one1=sc1.nextLine();//빈칸포함 한줄 다 //i love you 다읽음
+		int soo1=Integer.parseInt(one1);//next()는 i love you 쓰면 i만 읽음
+										
+		
+		System.out.println("두번째 수는 :");
+		int soo2=Integer.parseInt(sc1.nextLine());
+		System.out.println(soo1/soo2);
+		}
+		catch(ArrayIndexOutOfBoundsException e) {//범위 벗어날 시 예외처리
+			System.out.println("두개의 값을 입력하세요");
+		}
+		catch(NumberFormatException e){
+			System.out.println("숫자로 입력하세요");//숫자가 아닐시 예외처리
+		}
+		catch(ArithmeticException e) {//artithmetic (산술연산) 에러시 예외처리
+			System.out.println("0이 아닌 두개의 정수 입력");
+		}
+		catch(Exception e){//다른 예외시 처리
+			System.out.println("다른 예외나면 여기서 처리");
+			System.out.println("0이아닌 두개의 정수를 입력하세요");
+			System.out.println(e +"\n");
+			//e가 toString();으로 넘어오기 때문에 java.lang.Ar....이하의 에러가 전부 출력
+			System.out.println(e.getMessage());//
+		}finally {//무조건 처리
+		System.out.println("gooooooood");
+		}
+	}
+
+}
+---------------
+2.throw vs rethrow
+
+다음과같이 메소드 정의문있다
+throws를 적당한 위치 삽입하고, 메소드 정의문을 호출할
+메소드 호출문이 들어있는 main() 를 작성하시오
+
+private Static int kaja(int soo1,int soo2){
+return soo1/soo2;
+}
+
+예
+첫번째수는 : 0
+두번째수는 : 0
+여기서 에러처리한다는~
+
+import java.util.Scanner;
+
+public class AA422 {
+
+	public static void main(String[] args) {
+		 
+		try {
+		Scanner sc1=new Scanner(System.in);
+		System.out.println("첫번째 수는 :");
+		int soo1=Integer.parseInt(sc1.nextLine());
+		
+		System.out.println("두번째 수는 :");
+		int soo2=Integer.parseInt(sc1.nextLine());
+		
+		int bada=kaja(soo1,soo2);
+		System.out.println(bada);
+		}
+		catch(Exception e){
+			System.out.println("에러");
+		}
+		finally {
+			System.out.println("afsfa");
+		}
+	}
+	
+	
+	private static int kaja (int soo1,int soo2) 
+			throws ArithmeticException{//Arithmetic 예외발생시 처리는 메인에서//예외처리를 전가시킴
+		//throw new ArithmeticException();//Atrithmetic 예외 강제로 발생시킴
+		return soo1/soo2;
+		
+		}
+}
+
+----------------
+클래스
+1.사용자정의 클래스
+설계(정의)--제작(new,생성)--사용  3단계
+2.내장클래스
+Scanner,System,Date...
+
+시간 클래스
+
+]import java.text.SimpleDateFormat;
+import java.util.Date;//import 시  db는 java.sql.date 
+					//java는 java.util.Date
+					//system 클래스는 java.lang인데 안씀
+
+public class CD {
+
+	public static void main(String[] args) {
+		SimpleDateFormat df=new SimpleDateFormat("yyyy년 mm월 dd일");
+		Date d1=new Date();
+		
+		String time=df.format(d1);
+		System.out.println(time);//toSring();오버라이딩
+		System.out.println(d1.toLocaleString());
+		
+		System.out.println(d1.getYear()+"년"+d1.getMonth()+"월"+d1.getDate()+"일");
+		//1900년을 기준, 월은 1월이 0,12월이 11임
+		//a=a+1==>a+=1
+		//1-12==>0-11
+		
+		String strl=" 현재: ";
+		strl += (d1.getYear()+1900)+"년";
+		strl += (d1.getMonth()+1)+"월";
+		strl += d1.getDate()+"일";
+		strl += d1.getDay()+"요일";
+		System.out.println(strl);
+		//strl += strBae[d1.getday()]+"입니다~~";//strBae[2]//화요일 출력
+		
+		Date d22= new Date(1000L);///long,1000ms=1초
+		System.out.println();
+		System.out.println(d22.toLocaleString());//ms가 들어가면 계산기준은 1970년 1월 1일 0시 0분 0초(영국 천문대 기준+9시간)
+	System.out.println();
+		Date d23= new Date(1037436398768L);//ms밀리세컨드 임
+		
+		String s23=d23.toLocaleString();
+		
+		
+		System.out.println("기준에서 한참 지나면 "+s23);
+		//2002 11 16 5 46 38
+
+--------------
+오늘 만난사람과 만난지 100일되는 날이 몇년 몇월 몇일인지를 출력하시오
+
+Date d1=new Date();
+		Scanner sc1=new Scanner(System.in);
+		
+		System.out.println();
+		String str1=d1.toLocaleString();
+		
+		System.out.println(str1);
+		System.out.println("100일은");
+		d1.setDate(d1.getDate()+100-1);//오늘날짜+100일
+		
+		
+		System.out.println(d1.toLocaleString());
+
+살아온날짜를 출력하시오
+
+//살아온 날짜를 출력
+		Date d1=new Date();
+		Date d2=new Date(1994-1900,10-1,10);//내생일
+		System.out.println(d2.toLocaleString());
+		long cha =d1.getTime()-d2.getTime();//살아온 날
+		//getTime() --> 1970/1/1 00:00:00에서 정해진 시각까지 ms 구하기
+		long day =cha/1000/3600/24;//ms1000-초 //3600-시간/24==>날짜수
+		System.out.println(day);
+		
